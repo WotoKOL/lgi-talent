@@ -171,8 +171,10 @@ export function Stats() {
 }
 export function CallToAction({ creator = false }: { creator?: boolean }) {
   return (
-    <section className="cta-section section-wrap">
-      <Reveal>
+    <section
+      className={`cta-section section-wrap${creator ? " cta-section-creator" : ""}`}
+    >
+      <Reveal className="cta-layout">
         <SectionLabel>YOUR NEXT CHAPTER</SectionLabel>
         <h2>
           {creator ? (
@@ -189,15 +191,23 @@ export function CallToAction({ creator = false }: { creator?: boolean }) {
             </>
           )}
         </h2>
-        <div className="cta-bottom">
+        <div className="cta-action">
           <p>
             {creator
               ? "Bring your point of view. We’ll bring the brand connections and business support."
               : "Tell us where you want to go. We’ll bring the right people to get you there."}
           </p>
-          <ActionLink href={`/contact${creator ? "?audience=creator" : ""}`}>
-            {creator ? "Start your creator journey" : "Start a conversation"}
-          </ActionLink>
+          <Link
+            href={`/contact${creator ? "?audience=creator" : ""}`}
+            className="cta-link"
+          >
+            <span>
+              {creator ? "Start Your Creator Journey" : "Start A Conversation"}
+            </span>
+            <span className="cta-link-arrow" aria-hidden="true">
+              <ArrowUpRight size={28} strokeWidth={1.5} />
+            </span>
+          </Link>
         </div>
       </Reveal>
       <span className="cta-asterisk" aria-hidden="true">

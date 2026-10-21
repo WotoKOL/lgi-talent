@@ -4,56 +4,72 @@
     "source": "exec-6c6374d8-a723-4a0b-97d6-ee30360b1d87.png",
     "width": 1024,
     "height": 1536,
-    "bytes": 207492
+    "bytes": 1792458,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "hero-gamer": {
     "file": "/images/hero-gamer.webp",
     "source": "exec-1793d2c7-6c7f-41da-ac84-c541f03f0b31.png",
     "width": 1024,
     "height": 1536,
-    "bytes": 106770
+    "bytes": 1484334,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "hero-traveler": {
     "file": "/images/hero-traveler.webp",
     "source": "exec-117def29-6b75-4f75-9a5b-2ca7250bc15f.png",
     "width": 1024,
     "height": 1536,
-    "bytes": 176914
+    "bytes": 1628356,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "hero-lifestyle": {
     "file": "/images/hero-lifestyle.webp",
     "source": "exec-a1ffcbaf-bb3b-4baa-8034-a2f9271e04d5.png",
     "width": 1024,
     "height": 1536,
-    "bytes": 208540
+    "bytes": 1801850,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "hero-friends": {
     "file": "/images/hero-friends.webp",
     "source": "exec-bfb7a026-09b5-4f40-b1a2-01aa5d89492d.png",
     "width": 1024,
     "height": 1536,
-    "bytes": 163472
+    "bytes": 1726664,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "hero-community": {
     "file": "/images/hero-community.webp",
     "source": "exec-753955e1-a4ef-4690-8764-36f81fb21184.png",
     "width": 1024,
     "height": 1536,
-    "bytes": 155640
+    "bytes": 1658874,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "hero-fashion": {
     "file": "/images/hero-fashion.webp",
     "source": "exec-74f89356-6ca0-418e-bf27-75ed9ffc0834.png",
     "width": 1024,
     "height": 1536,
-    "bytes": 128424
+    "bytes": 1555338,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "hero-couple": {
     "file": "/images/hero-couple.webp",
     "source": "exec-8c2638c9-740d-486b-9aab-057536882d77.png",
     "width": 1024,
     "height": 1536,
-    "bytes": 137016
+    "bytes": 1579230,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "hero-together": {
     "file": "/images/hero-together.webp",
@@ -72,65 +88,83 @@
   "brand-strategy": {
     "file": "/images/brand-strategy.webp",
     "source": "exec-589be8b3-ab9f-466d-ab79-0aac5b0022e0.png",
-    "width": 900,
-    "height": 675,
-    "bytes": 71894
+    "width": 1448,
+    "height": 1086,
+    "bytes": 1494542,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "brand-matching": {
     "file": "/images/brand-matching.webp",
     "source": "exec-a136ab2e-3d47-4e04-873a-7f1aa9161771.png",
-    "width": 900,
-    "height": 675,
-    "bytes": 48200
+    "width": 1448,
+    "height": 1086,
+    "bytes": 1396530,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "brand-content": {
     "file": "/images/brand-content.webp",
     "source": "exec-d478df10-9347-4dad-91ec-e1c041c94a7f.png",
-    "width": 900,
-    "height": 675,
-    "bytes": 40262
+    "width": 1448,
+    "height": 1086,
+    "bytes": 1264242,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "brand-local": {
     "file": "/images/brand-local.webp",
     "source": "exec-535442af-ca45-4ebc-a76c-1ed41e8f3025.png",
-    "width": 900,
-    "height": 675,
-    "bytes": 68216
+    "width": 1448,
+    "height": 1086,
+    "bytes": 1489370,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "brand-platforms": {
     "file": "/images/brand-platforms.webp",
     "source": "exec-47903423-d63d-45b6-9e90-883d747ee161.png",
-    "width": 900,
-    "height": 675,
-    "bytes": 64038
+    "width": 1448,
+    "height": 1086,
+    "bytes": 1404686,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "brand-performance": {
     "file": "/images/brand-performance.webp",
     "source": "exec-aef82e52-73b5-45ec-b158-516435b9754a.png",
-    "width": 900,
-    "height": 675,
-    "bytes": 26868
+    "width": 1448,
+    "height": 1086,
+    "bytes": 1183726,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "creator-opportunities": {
     "file": "/images/creator-opportunities.webp",
     "source": "exec-a17f51b4-a10b-41a7-9c21-84c545f47890.png",
-    "width": 900,
-    "height": 600,
-    "bytes": 75766
+    "width": 1536,
+    "height": 1024,
+    "bytes": 1429336,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "creator-negotiation": {
     "file": "/images/creator-negotiation.webp",
     "source": "exec-dc9c04cf-0b49-45ef-ac21-021cd9b5e6dd.png",
-    "width": 900,
-    "height": 600,
-    "bytes": 40454
+    "width": 1536,
+    "height": 1024,
+    "bytes": 1226718,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "creator-contracts": {
     "file": "/images/creator-contracts.webp",
     "source": "exec-dbc7bc2a-2a16-4c0d-a22e-9ac0c37d9299.png",
-    "width": 900,
-    "height": 600,
-    "bytes": 29858
+    "width": 1536,
+    "height": 1024,
+    "bytes": 1126242,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "creator-collaboration": {
     "file": "/images/creator-collaboration.webp",
@@ -142,30 +176,38 @@
   "creator-payments": {
     "file": "/images/creator-payments.webp",
     "source": "exec-09a10bf1-39fa-4312-904c-3fd58afe93de.png",
-    "width": 900,
-    "height": 600,
-    "bytes": 25604
+    "width": 1536,
+    "height": 1024,
+    "bytes": 1082010,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "creator-growth": {
     "file": "/images/creator-growth.webp",
     "source": "exec-eb1648e2-7c9b-4ba6-ba29-0f6df9d0b9bb.png",
-    "width": 900,
-    "height": 675,
-    "bytes": 29186
+    "width": 1448,
+    "height": 1086,
+    "bytes": 1162270,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "creator-voice": {
     "file": "/images/creator-voice.webp",
     "source": "exec-d866582b-3458-4da3-8bda-53c9b1d4e2b6.png",
-    "width": 900,
-    "height": 675,
-    "bytes": 29124
+    "width": 1448,
+    "height": 1086,
+    "bytes": 1246516,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "creator-looking-for": {
     "file": "/images/creator-looking-for.webp",
     "source": "exec-bdc01d38-1dd9-4d65-b959-74a9689d0616.png",
-    "width": 600,
-    "height": 900,
-    "bytes": 43470
+    "width": 1024,
+    "height": 1536,
+    "bytes": 1351814,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "service-influencer": {
     "file": "/images/service-influencer.webp",
@@ -177,9 +219,11 @@
   "service-launch": {
     "file": "/images/service-launch.webp",
     "source": "exec-3d2cc3db-3ae6-4e40-a1b6-068fbd5cceab.png",
-    "width": 675,
-    "height": 900,
-    "bytes": 68506
+    "width": 1086,
+    "height": 1448,
+    "bytes": 1482186,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "service-social": {
     "file": "/images/service-social.webp",
@@ -191,9 +235,11 @@
   "service-tradeshow": {
     "file": "/images/service-tradeshow.webp",
     "source": "exec-9f8ba44e-1b9b-47f1-81f7-7a39735f6039.png",
-    "width": 900,
-    "height": 675,
-    "bytes": 86514
+    "width": 1448,
+    "height": 1086,
+    "bytes": 1484964,
+    "encoding": "lossless WebP",
+    "resized": false
   },
   "service-events": {
     "file": "/images/service-events.webp",
