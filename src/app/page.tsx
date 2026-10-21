@@ -17,13 +17,6 @@ export default function Home() {
     <>
       <section className="home-hero">
         <div className="hero-glow" />
-        <div className="hero-topline">
-          <span>
-            <span className="status-dot" />
-            LOS ANGELES ROOTS. GLOBAL REACH.
-          </span>
-          <span>BRANDS × CREATORS × CULTURE</span>
-        </div>
         <div className="hero-title-wrap">
           <h1>
             <span>
@@ -36,28 +29,40 @@ export default function Home() {
           </h1>
           <div className="hero-description">
             <p>
-              Real people. Real connections. Global possibilities.
-              <br />
-              We’re LGI, a global influencer marketing
-              <br className="desktop-break" /> and creator management agency.
+              LGI is a U.S.-based global influencer marketing and creator
+              management agency,
+              <br className="desktop-break" />
+              {" "}
+              helping brands connect locally and creators grow globally.
             </p>
             <div className="hero-buttons">
               <ActionLink href="/contact">
-                Start a brand collaboration
+                Start A Brand Collaboration
               </ActionLink>
               <ActionLink href="/contact?audience=creator" secondary>
-                Start your creator journey
+                Start Your Creator Journey
               </ActionLink>
             </div>
           </div>
         </div>
         <HeroRail />
         <div className="hero-bottomline">
-          <span>DIFFERENT VOICES. SHARED AMBITION.</span>
-          <a href="#connections">
-            MEET YOUR NEXT CONNECTION <ArrowDown size={15} />
+          <div className="hero-edge-note">
+            <span>DIFFERENT VOICES.</span>
+            <span>Shared ambition.</span>
+          </div>
+          <a href="#connections" className="connection-scroll">
+            <span className="scroll-orbit" aria-hidden="true">
+              <span className="scroll-arrow">
+                <ArrowDown size={20} />
+              </span>
+            </span>
+            <span>MEET YOUR NEXT CONNECTION</span>
           </a>
-          <span>CALIFORNIA BASED. GLOBALLY CONNECTED.</span>
+          <div className="hero-edge-note">
+            <span>CALIFORNIA BASED.</span>
+            <span>Globally connected.</span>
+          </div>
         </div>
       </section>
       <div id="connections">

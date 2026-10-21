@@ -1,10 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, Globe2 } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { Reveal, Counter } from "./motion";
-import { Brand } from "./brand";
-import { navigation } from "@/lib/content";
-import { site } from "@/lib/site";
 
 export function ActionLink({
   href,
@@ -88,11 +85,18 @@ export function BrandWall({ full = false }: { full?: boolean }) {
       aria-label="Brand network"
     >
       <div className="brand-wall-heading">
-        <span className="eyebrow">IN GOOD COMPANY</span>
-        <p>
-          Trusted by global brands.
-          <br />
-          <span>Connected by LGI.</span>
+        <div>
+          <span className="eyebrow">IN GOOD COMPANY</span>
+          <h2>
+            Trusted by global brands.
+            <br />
+            <span>Connected by LGI.</span>
+          </h2>
+        </div>
+        <p className="brand-wall-description">
+          From consumer tech and smart home to digital platforms and global
+          e-commerce, LGI works with brands across industries to bring their
+          products, stories, and creators to audiences around the world.
         </p>
       </div>
       <div className="logo-grid">
@@ -137,21 +141,30 @@ export function Stats() {
         </p>
       </Reveal>
       <Reveal className="stats-numbers">
-        <div>
+        <Link href="/brand-services" className="stat-pathway">
           <strong>
             <Counter value={8245} suffix="+" />
           </strong>
-          <span>Brands worked with</span>
-        </div>
-        <div>
+          <span className="stat-caption">Brands worked with</span>
+          <span className="stat-destination">
+            For Brands
+            <span className="stat-arrow" aria-hidden="true">
+              <ArrowUpRight size={20} />
+            </span>
+          </span>
+        </Link>
+        <Link href="/creators" className="stat-pathway">
           <strong>
             <Counter value={200} suffix="+" />
           </strong>
-          <span>Exclusive creators signed</span>
-        </div>
-        <p>
-          <Globe2 size={16} /> U.S. & Europe. With a global point of view.
-        </p>
+          <span className="stat-caption">Exclusive creators signed</span>
+          <span className="stat-destination">
+            For Creators
+            <span className="stat-arrow" aria-hidden="true">
+              <ArrowUpRight size={20} />
+            </span>
+          </span>
+        </Link>
       </Reveal>
     </section>
   );
@@ -293,55 +306,5 @@ export function PageHero({
         <span>SCROLL TO EXPLORE</span>
       </a>
     </section>
-  );
-}
-export function Footer() {
-  return (
-    <footer className="site-footer">
-      <div className="footer-top">
-        <Brand footer />
-        <div className="footer-message">
-          Los Angeles roots.
-          <br />
-          Global connections.
-        </div>
-        <a href={`mailto:${site.email}`} className="footer-email">
-          {site.email}
-          <ArrowUpRight size={20} />
-        </a>
-      </div>
-      <div className="footer-middle">
-        <p>
-          17800 Castleton St, Ste 665
-          <br />
-          City of Industry, CA 91748
-          <br />
-          United States
-        </p>
-        <nav aria-label="Footer navigation">
-          {navigation.map((n) => (
-            <Link href={n.href} key={n.href}>
-              {n.label}
-            </Link>
-          ))}
-          <Link href="/contact">Contact Us</Link>
-        </nav>
-        <span className="footer-signoff">
-          <span className="status-dot" />
-          LET’S MAKE CONNECTIONS.
-        </span>
-      </div>
-      <div className="footer-bottom">
-        <span>© {new Date().getFullYear()} LGI. All rights reserved.</span>
-        <div>
-          <Link href="/privacy">Privacy</Link>
-          <Link href="/cookies">Cookies</Link>
-          <Link href="/terms">Terms</Link>
-          <a href="#top" aria-label="Back to top">
-            Back to top ↑
-          </a>
-        </div>
-      </div>
-    </footer>
   );
 }
