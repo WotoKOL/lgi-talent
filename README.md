@@ -1,38 +1,51 @@
-### 3 分钟了解如何进入开发
+# LGI brand website
 
-欢迎使用云效代码管理 Codeup，通过阅读以下内容，你可以快速熟悉 Codeup ，并立即开始今天的工作。
+An English-language, responsive website for Linking Global Influencers, built with Next.js App Router, React, TypeScript, and Motion. Pages render through the Next.js server stack, with interactive navigation, campaign filters, and contact forms on the client.
 
-### 提交**文件**
+## Development
 
-Codeup 支持两种方式进行代码提交：网页端提交，以及本地 Git 客户端提交。
+Node.js 24 is supported. Use Node.js 20.9 or later.
 
-* 如需体验本地命令行操作，请先安装 Git 工具，安装方法参见[安装Git](https://help.aliyun.com/document_detail/153800.html)。
+```sh
+npm install
+cp .env.example .env.local
+npm run dev
+```
 
-* 如需体验 SSH 方式克隆和提交代码，请先在平台账号内配置 SSH 公钥，配置方法参见[配置 SSH 密钥](https://help.aliyun.com/document_detail/153709.html)。
+Open `http://localhost:3000`. For a locked dependency installation, use `npm ci`.
 
-* 如需体验 HTTP 方式克隆和提交代码，请先在平台账号内配置克隆账密，配置方法参见[配置 HTTPS 克隆账号密码](https://help.aliyun.com/document_detail/153710.html)。
+```sh
+npm run lint
+npm run typecheck
+npm run build
+npm start
+```
 
-现在，你可以在 Codeup 中提交代码文件了，跟着文档「[__提交第一行代码__](https://help.aliyun.com/document_detail/153707.html?spm=a2c4g.153710.0.0.3c213774PFSMIV#6a5dbb1063ai5)」一起操作试试看吧。
+`npm start` serves the production build; run `npm run build` first.
 
-<img src="https://img.alicdn.com/imgextra/i3/O1CN013zHrNR1oXgGu8ccvY_!!6000000005235-0-tps-2866-1268.jpg" width="100%" />
+## Deployment configuration
 
+Deploy to a host that supports Next.js and a Node.js server. The contact API requires server execution; a static HTML export is insufficient.
 
-### 进行代码检测
+| Variable               | Purpose                                                                                                                                                               |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL` | The actual production origin, including `https://`. Set before building so canonical URLs, Open Graph metadata, robots rules, and the sitemap use the correct domain. |
+| `CONTACT_WEBHOOK_URL`  | Optional server-side HTTP(S) endpoint that receives validated contact inquiries as JSON. Keep this value private.                                                     |
 
-开发过程中，为了更好的维护你的代码质量，你可以开启 Codeup 内置开箱即用的「[代码检测服务](https://help.aliyun.com/document_detail/434321.html)」，开启后提交或合并请求的变更将自动触发检测，识别代码编写规范和安全漏洞问题，并及时提供结果报表和修复建议。
+The default origin is `http://localhost:3000`, which produces `noindex` metadata and disallows crawling. No production domain has been assumed. Set the confirmed public origin and rebuild before launch; keep staging deployments excluded from search through the hosting configuration.
 
-<img src="https://img.alicdn.com/imgextra/i2/O1CN01BRzI1I1IO0CR2i4Aw_!!6000000000882-0-tps-2862-1362.jpg" width="100%" />
+When `CONTACT_WEBHOOK_URL` is configured, `/api/contact` posts the audience, name, email, message, relevant brand or creator fields, consent, source, and timestamp to that service. Configure the receiver to handle the inquiry and return a successful HTTP status only after acceptance. Failed delivery produces an error. Inquiries are not stored or logged by this application.
 
-### 开展代码评审
+When the endpoint is absent, the form prepares a real email draft addressed to `market@lgi.com`. The visitor must open their email application and send the draft. The website does not claim that the inquiry was sent. A working email application is needed for this fallback.
 
-功能开发完毕后，通常你需要发起「[代码评审并执行合并](https://help.aliyun.com/document_detail/153872.html)」，Codeup 支持多人协作的代码评审服务，你可以通过「[保护分支设置合并规则](https://help.aliyun.com/document_detail/153873.html?spm=a2c4g.203108.0.0.430765d1l9tTRR#p-4on-aep-l5q)」策略及「[__合并请求设置__](https://help.aliyun.com/document_detail/153874.html?spm=a2c4g.153871.0.0.3d38686cJpcdJI)」对合并过程进行流程化管控，同时提供在线代码评审及冲突解决能力，让评审过程更加流畅。
+## Pages and content
 
-<img src="https://img.alicdn.com/imgextra/i1/O1CN01MaBDFH1WWcGnQqMHy_!!6000000002796-0-tps-2592-1336.jpg" width="100%" />
+Six independent pages: Home (`/`), Brand Services (`/brand-services`), Creators (`/creators`), Campaigns (`/case-studies`), About (`/about`), and Contact (`/contact`). Legal pages are `/privacy`, `/cookies`, and `/terms`.
 
-### 成员协作
+Content and source artwork come from the supplied [Feishu product document](https://i3h3m6c4zk.feishu.cn/wiki/RZ8DwEehdiVtWRkOvcuc32LpnZd). Downloaded imagery and logos were prepared and optimized locally in `public/images` and `public/logos`; fonts are served locally from `public/fonts`. `scripts/asset-manifest.json` records the prepared assets. The visual reference informed the layout and motion; its images were not reused.
 
-是时候邀请成员一起编写卓越的代码工程了，请点击左下角「成员」邀请你的小伙伴开始协作吧！
+The source document does not provide approved project names and campaign results or a confirmed roster of represented creators. The Campaigns page therefore presents campaign formats, and the creator wall uses topic imagery without inventing creator profiles. Team biographies follow the supplied source. Replace these sections with approved cases and a confirmed roster when available.
 
-### 更多
+Privacy, cookie, and terms copy is a baseline and needs review against the actual operator, delivery service, and business practices before launch. Confirm the public contact details, team claims, and rights to publish source imagery and logos as part of the operator’s content review.
 
-Git 使用教学、高级功能指引等更多说明，参见[Codeup帮助文档](https://help.aliyun.com/document_detail/153402.html)。
+See [verification notes](docs/verification.md) for the checks performed and remaining deployment checks.
