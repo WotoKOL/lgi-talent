@@ -1,24 +1,27 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { MouseEventHandler } from "react";
+import { site } from "@/lib/site";
 
-export function Brand({ footer = false }: { footer?: boolean }) {
+export function Brand({ footer = false, onClick }: {
+  footer?: boolean;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
+}) {
   return (
     <Link
       href="/"
       className={`brand ${footer ? "brand-footer" : ""}`}
-      aria-label="LGI home"
+      aria-label={`${site.fullName} home`}
+      onClick={onClick}
     >
-      <Image src="/logos/lgi-mark.png" width={40} height={40} alt="" />
-      <span>
-        LGI<span className="brand-period">.</span>
-      </span>
-      {footer ? (
-        <small>
-          LINKING GLOBAL
-          <br />
-          INFLUENCERS
-        </small>
-      ) : null}
+      <Image
+        className="brand-image"
+        src="/logos/lgi-wordmark.png"
+        width={1000}
+        height={358}
+        alt=""
+        loading={footer ? "lazy" : "eager"}
+      />
     </Link>
   );
 }

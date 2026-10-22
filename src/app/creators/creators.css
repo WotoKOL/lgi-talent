@@ -1,0 +1,21 @@
+.creators-page .page-hero p {
+  max-width: 650px;
+}
+
+.creators-page .creator-services-grid p {
+  max-width: none;
+}
+
+@media (max-width: 760px) {
+  .creators-page .page-hero-image {
+    object-position: 82% center;
+  }
+
+  .creators-page .creator-services-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .creators-page .creator-services-grid p {
+    font-size: 12px;
+  }
+}

@@ -13,7 +13,7 @@ const footerNavigation = [
 
 export function Footer() {
   return (
-    <footer className="lgi-footer" aria-label="LGI footer">
+    <footer className="lgi-footer" aria-label={`${site.fullName} footer`}>
       <div className="lgi-footer__inner">
         <div className="lgi-footer__main">
           <div className="lgi-footer__identity">
@@ -68,7 +68,7 @@ export function Footer() {
         </div>
 
         <div className="lgi-footer__bottom">
-          <p>© {new Date().getFullYear()} LGI. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {site.fullName}. All rights reserved.</p>
           <nav className="lgi-footer__legal" aria-label="Legal navigation">
             <Link href="/privacy">Privacy Policy</Link>
             <Link href="/cookies">Cookie Policy</Link>

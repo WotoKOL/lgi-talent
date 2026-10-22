@@ -28,11 +28,12 @@ export const hasPublicOrigin = ![
 ].includes(hostname);
 
 export const site = {
-  name: "LGI",
-  fullName: "Linking Global Influencers",
+  name: "Linking Global Influencer",
+  fullName: "Linking Global Influencer",
+  shortName: "LGI",
   tagline: "Linking brands. Empowering creators.",
   description:
-    "LGI is a global influencer marketing and creator management agency based in Greater Los Angeles. We connect brands with creators, authentic content, and local expertise across the U.S. and Europe.",
+    "Linking Global Influencer (LGI) is a global influencer marketing and creator management agency based in Greater Los Angeles. We connect brands with creators, authentic content, and local expertise across the U.S. and Europe.",
   origin,
   url: origin,
   email: "market@lgi.com",

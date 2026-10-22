@@ -22,17 +22,22 @@ const body = localFont({
 });
 export const metadata: Metadata = {
   metadataBase: new URL(site.origin),
+  applicationName: site.fullName,
+  icons: {
+    icon: { url: "/favicon.ico", type: "image/x-icon" },
+    shortcut: "/favicon.ico",
+  },
   title: {
-    default: "LGI — Linking Brands. Empowering Creators.",
-    template: "%s | LGI",
+    default: `${site.fullName} — Linking Brands. Empowering Creators.`,
+    template: `%s | ${site.fullName}`,
   },
   description: site.description,
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_US",
-    siteName: "LGI",
-    title: "LGI — Linking Brands. Empowering Creators.",
+    siteName: site.fullName,
+    title: `${site.fullName} — Linking Brands. Empowering Creators.`,
     description: site.description,
     url: absoluteUrl("/"),
     images: [
@@ -40,11 +45,14 @@ export const metadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "LGI — Linking brands. Empowering creators.",
+        alt: `${site.fullName} — Linking brands. Empowering creators.`,
       },
     ],
   },
-  twitter: { card: "summary_large_image" },
+  twitter: {
+    card: "summary_large_image",
+    title: `${site.fullName} — Linking Brands. Empowering Creators.`,
+  },
   robots: { index: hasPublicOrigin, follow: hasPublicOrigin },
 };
 export default function RootLayout({

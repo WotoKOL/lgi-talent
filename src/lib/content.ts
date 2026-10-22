@@ -132,6 +132,6 @@ export const creatorSteps = [
 export const navigation = [
   { href: "/brand-services", label: "For Brands" },
   { href: "/creators", label: "For Creators" },
-  { href: "/case-studies", label: "Our Work" },
+  { href: "/case-studies", label: "Case Studies" },
   { href: "/about", label: "About Us" },
 ];

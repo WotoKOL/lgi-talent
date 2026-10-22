@@ -1,15 +1,13 @@
-import {
-  ActionLink,
-  BrandWall,
-  CallToAction,
-  PageHero,
-  Photo,
-  Process,
-  SectionLabel,
-} from "@/components/sections";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { PageHero, Photo, SectionLabel } from "@/components/sections";
 import { Reveal } from "@/components/motion";
-import { brandServices, brandSteps } from "@/lib/content";
+import { BrandPartnershipProcess } from "@/components/brand-partnership-process";
+import { BrandCampaignCTA } from "@/components/brand-campaign-cta";
+import { brandServices } from "@/lib/content";
 import { createMetadata } from "@/lib/site";
+import "./brand-services.css";
 
 export const metadata = createMetadata({
   title: "Global Influencer Marketing & Brand Services",
@@ -19,33 +17,33 @@ export const metadata = createMetadata({
 });
 const campaigns = [
   [
-    "Influencer marketing",
-    "From creator strategy to content, execution, and reporting.",
+    "Influencer Marketing",
+    "We build creator strategies from planning and talent selection to content and reporting.",
     "service-influencer",
   ],
   [
-    "Product launches",
-    "Unboxings, reviews, tutorials, and real-world product stories.",
+    "Product Launch Campaigns",
+    "Drive awareness and conversation through unboxings, reviews, tutorials, and real-world content.",
     "service-launch",
   ],
   [
-    "Social media campaigns",
-    "Consistent, authentic content that builds awareness and trust.",
+    "Social Media Campaigns",
+    "Build brand awareness and trust through consistent, authentic creator content.",
     "service-social",
   ],
   [
-    "Trade shows & events",
-    "Creator outreach and on-site coverage at CES, IFA, and beyond.",
+    "Trade Show & Event Marketing",
+    "From CES and IFA to on-site content, we handle creator outreach, event coverage, and execution.",
     "service-tradeshow",
   ],
   [
-    "Brand activations",
-    "Bring local creators to pop-ups, launches, and brand experiences.",
+    "Brand Events & Creator Activations",
+    "Bring local creators to pop-ups, launches, sports events, and brand experiences.",
     "service-events",
   ],
   [
-    "Long-term partnerships",
-    "Lasting relationships, valuable content, and a growing brand presence.",
+    "Long-Term Creator Partnerships",
+    "Build lasting creator relationships, content assets, and brand presence over time.",
     "service-partnerships",
   ],
 ];
@@ -53,7 +51,6 @@ export default function BrandsPage() {
   return (
     <>
       <PageHero
-        eyebrow="FOR BRANDS / GLOBAL INFLUENCER MARKETING"
         title={
           <>
             GO GLOBAL.
@@ -63,16 +60,13 @@ export default function BrandsPage() {
             <em>RIGHT CREATORS.</em>
           </>
         }
-        description="Your next market. Your next launch. The people who make it happen. Creator strategy, content, and U.S. execution, all in one place."
+        description="LGI helps brands go to market with creator strategy, talent matching, content creation, U.S.-based management, and global reach—all in one place."
         image="brand-hero"
         alt="Two creators capturing a moment with a camera"
         cta="Start a campaign"
         href="/contact"
       />
-      <div id="main-content">
-        <BrandWall />
-      </div>
-      <section className="section-wrap light-section">
+      <section id="main-content" className="section-wrap light-section">
         <Reveal>
           <SectionLabel number="01">
             A PLAN WITH PEOPLE AT ITS HEART
@@ -100,11 +94,14 @@ export default function BrandsPage() {
           ))}
         </div>
       </section>
-      <section className="campaign-section section-wrap">
+      <section
+        className="brand-service-section section-wrap"
+        aria-labelledby="brand-services-heading"
+      >
         <Reveal>
           <SectionLabel number="02">BUILT AROUND YOUR NEXT MOVE</SectionLabel>
           <div className="section-heading">
-            <h2>
+            <h2 id="brand-services-heading">
               Where do you
               <br />
               want to go?
@@ -115,22 +112,41 @@ export default function BrandsPage() {
             </p>
           </div>
         </Reveal>
-        <div className="campaign-list">
+        <div className="brand-service-list">
           {campaigns.map(([title, text, img], i) => (
-            <Reveal className="campaign-row" key={title}>
-              <span className="campaign-number">0{i + 1}</span>
-              <Photo name={img} alt={title} />
-              <div>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </div>
-              <ActionLink href="/contact">Let’s talk</ActionLink>
+            <Reveal key={title}>
+              <Link
+                className="brand-service-row"
+                href="/contact"
+                aria-label={`Discuss ${title}`}
+                aria-describedby={`brand-service-description-${i + 1}`}
+              >
+                <span className="brand-service-number" aria-hidden="true">
+                  <span>{String(i + 1).padStart(2, "0")}</span>
+                </span>
+                <span className="brand-service-image">
+                  <Image
+                    src={`/images/${img}.png`}
+                    fill
+                    sizes="(max-width: 600px) 96px, (max-width: 1000px) 150px, 190px"
+                    alt=""
+                  />
+                </span>
+                <div className="brand-service-copy">
+                  <h3>{title}</h3>
+                  <p id={`brand-service-description-${i + 1}`}>{text}</p>
+                </div>
+                <span className="brand-service-action" aria-hidden="true">
+                  <span>Let’s Talk</span>
+                  <ArrowUpRight size={18} />
+                </span>
+              </Link>
             </Reveal>
           ))}
         </div>
       </section>
-      <Process steps={brandSteps} />
-      <CallToAction />
+      <BrandPartnershipProcess />
+      <BrandCampaignCTA />
     </>
   );
 }

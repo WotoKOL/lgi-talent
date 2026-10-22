@@ -359,5 +359,158 @@
     "width": 1448,
     "height": 1086,
     "bytes": 66666
+  },
+  "service-influencer-source": {
+    "file": "/images/service-influencer.png",
+    "source": "exec-8988a713-895b-46bf-8ebc-0b34854be1b3.png",
+    "width": 1086,
+    "height": 1448,
+    "bytes": 2333863,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "service-launch-source": {
+    "file": "/images/service-launch.png",
+    "source": "exec-3d2cc3db-3ae6-4e40-a1b6-068fbd5cceab.png",
+    "width": 1086,
+    "height": 1448,
+    "bytes": 2204466,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "service-social-source": {
+    "file": "/images/service-social.png",
+    "source": "exec-b8b6cb3e-048f-498a-9ea4-48515075facd.png",
+    "width": 1086,
+    "height": 1448,
+    "bytes": 2425109,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "service-tradeshow-source": {
+    "file": "/images/service-tradeshow.png",
+    "source": "exec-9f8ba44e-1b9b-47f1-81f7-7a39735f6039.png",
+    "width": 1448,
+    "height": 1086,
+    "bytes": 2142119,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "service-events-source": {
+    "file": "/images/service-events.png",
+    "source": "exec-571fcc35-c141-4683-88ca-9171a1cc5fff.png",
+    "width": 1086,
+    "height": 1448,
+    "bytes": 2019756,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "service-partnerships-source": {
+    "file": "/images/service-partnerships.png",
+    "source": "exec-447d02c1-2d60-45c6-86c2-f716d9f40492.png",
+    "width": 1086,
+    "height": 1448,
+    "bytes": 2448893,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "brand-partnership-process": {
+    "file": "/images/brand-partnership-process.png",
+    "source": "exec-a06ae5ff-8907-4e2d-bf83-f528c6d1a13f.png",
+    "width": 1024,
+    "height": 1536,
+    "bytes": 2620538,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "brand-campaign-proposal": {
+    "file": "/images/brand-campaign-proposal.png",
+    "source": "exec-1d59c281-17e7-445a-9ed2-031a90651e67.png",
+    "width": 1448,
+    "height": 1086,
+    "bytes": 1975546,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "brand-campaign-still-life": {
+    "file": "/images/brand-campaign-still-life.png",
+    "source": "exec-1038fcd4-6722-4d53-8eef-3b253fface96.png",
+    "width": 1536,
+    "height": 1024,
+    "bytes": 2210550,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "creator-application-scene": {
+    "file": "/images/creator-application-scene.png",
+    "source": "exec-d77c9f61-d87f-44cc-9b2b-af3df6376183.png",
+    "width": 1672,
+    "height": 941,
+    "bytes": 2111278,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "about-company-office": {
+    "file": "/images/about-company-office.png",
+    "source": "exec-98be80f7-18c0-4348-a3bf-2942bfdb42cb.png",
+    "width": 1448,
+    "height": 1086,
+    "bytes": 2669596,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "about-values-pillars": {
+    "file": "/images/about-values-pillars.png",
+    "source": "exec-97d52cc0-dc3f-4141-b9f8-0b03d8b17544.png",
+    "width": 1672,
+    "height": 941,
+    "bytes": 1676488,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "daniel-carter-source": {
+    "file": "/images/daniel-carter.png",
+    "source": "Daniel Carter.png",
+    "width": 1122,
+    "height": 1402,
+    "bytes": 2010502,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "maya-brooks-source": {
+    "file": "/images/maya-brooks.png",
+    "source": "book.png",
+    "width": 1122,
+    "height": 1402,
+    "bytes": 2246782,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "sofia-ramirez-source": {
+    "file": "/images/sofia-ramirez.png",
+    "source": "Sofia Ramirez.png",
+    "width": 1122,
+    "height": 1402,
+    "bytes": 2136115,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "ethan-miller-source": {
+    "file": "/images/ethan-miller.png",
+    "source": "Ethan Miller.png",
+    "width": 1122,
+    "height": 1402,
+    "bytes": 2089108,
+    "encoding": "original PNG",
+    "resized": false
+  },
+  "creators-hero": {
+    "file": "/images/creators-hero.webp",
+    "source": "exec-1e6b3a59-6fb3-43fa-835b-9d9733bfc56b.webp",
+    "width": 1672,
+    "height": 941,
+    "bytes": 26974,
+    "encoding": "original WebP",
+    "resized": false
   }
 }

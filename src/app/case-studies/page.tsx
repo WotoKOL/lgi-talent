@@ -12,15 +12,14 @@ export default function WorkPage() {
   return (
     <>
       <PageHero
-        eyebrow="OUR WORK / BRANDS MEET CREATORS"
         title={
           <>
-            GOOD CONNECTIONS.
+            Growing Brands.
             <br />
-            <em>GREAT POSSIBILITIES.</em>
+            <em>Empowering Creators.</em>
           </>
         }
-        description="From the stories on your screen to the moments you show up for. We connect brands, creators, and global markets."
+        description="From brand marketing campaigns to creator partnership stories — see how LGI connects brands, creators, and global markets."
         image="case-tcl"
         alt="Creators and a consumer technology brand at a live event"
       />
@@ -31,13 +30,13 @@ export default function WorkPage() {
         <SectionLabel number="01">FROM STRATEGY TO EXECUTION</SectionLabel>
         <div className="section-heading">
           <h2>
-            Ways we bring
+            From Strategy
             <br />
-            brands to life.
+            to Execution
           </h2>
           <p>
-            Discover our campaign formats and creator support. Tell us your
-            category and we’ll share relevant partnership examples.
+            See how each project came together — the market goals, creator
+            strategy, execution, and results.
           </p>
         </div>
         <WorkGallery />

@@ -18,20 +18,18 @@ export default async function ContactPage({
   return (
     <>
       <PageHero
-        eyebrow="CONTACT / YOUR NEXT CONNECTION"
         title={
           <>
-            LET’S START
+            Let’s Start a{" "}
             <br />
-            <em>SOMETHING.</em>
+            <em>Conversation.</em>
           </>
         }
-        description="A new campaign. A new opportunity. A first hello. Whatever brings you here, we’d love to hear it."
+        description="Whether you’re looking for creators or new brand opportunities, the LGI team is here to help."
         image="hero-community"
         alt="Friends looking together toward the sky"
         cta="Tell us what’s next"
         href="#main-content"
-        compact
       />
       <section
         id="main-content"

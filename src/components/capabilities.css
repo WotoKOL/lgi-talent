@@ -3,6 +3,14 @@
   background: radial-gradient(ellipse at 100% 12%, #d2bc0d08, transparent 45%), var(--ink);
 }
 
+.capabilities [data-capability-reveal-state="pending"] {
+  opacity: 0;
+}
+
+.capabilities [data-capability-reveal-state="pending"]:focus-within {
+  opacity: 1;
+}
+
 .capability-section-top {
   display: flex;
   align-items: center;
@@ -159,6 +167,7 @@
   height: 100%;
   border-bottom: 1px solid #f5f4ee2b;
   transition: border-color 250ms;
+  transform-origin: 50% 85%;
 }
 
 .capability-card > a:hover,
@@ -493,6 +502,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .capabilities [data-capability-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
   .capability-panel * {
     opacity: 1 !important;
     transform: none !important;

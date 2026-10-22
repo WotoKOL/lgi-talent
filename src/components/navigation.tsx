@@ -7,6 +7,9 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { Brand } from "./brand";
 import { navigation } from "@/lib/content";
 
+const primaryNavigation = [{ href: "/", label: "Home" }, ...navigation];
+const lightHeaderRoutes = new Set(["/privacy", "/cookies", "/terms"]);
+
 export function Navigation() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -15,14 +18,19 @@ export function Navigation() {
 
   useEffect(() => {
     if (!open) return;
+    const trigger = toggleRef.current;
     const old = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const wideScreen = window.matchMedia("(min-width: 1041px)");
+    function onWideScreen(event: MediaQueryListEvent) {
+      if (event.matches) setOpen(false);
+    }
+    wideScreen.addEventListener("change", onWideScreen);
     const first = menuRef.current?.querySelector<HTMLElement>("button, a");
     first?.focus();
     function keydown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setOpen(false);
-        toggleRef.current?.focus();
       }
       if (event.key === "Tab") {
         const links =
@@ -44,15 +52,20 @@ export function Navigation() {
     return () => {
       document.body.style.overflow = old;
       document.removeEventListener("keydown", keydown);
+      wideScreen.removeEventListener("change", onWideScreen);
+      trigger?.focus();
     };
   }, [open]);
 
   return (
     <>
-      <header className="site-header" inert={open}>
+      <header
+        className={`site-header${lightHeaderRoutes.has(pathname) ? " site-header-light" : ""}`}
+        inert={open}
+      >
         <Brand />
         <nav className="desktop-nav" aria-label="Main navigation">
-          {navigation.map((item) => (
+          {primaryNavigation.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -63,8 +76,15 @@ export function Navigation() {
           ))}
         </nav>
         <div className="header-actions">
-          <Link className="header-cta" href="/contact">
-            Let’s talk <ArrowUpRight size={17} />
+          <Link
+            className="header-cta"
+            href="/contact"
+            aria-current={pathname === "/contact" ? "page" : undefined}
+          >
+            <span>Let’s talk</span>
+            <span className="header-cta-arrow" aria-hidden="true">
+              <ArrowUpRight size={16} />
+            </span>
           </Link>
           <button
             ref={toggleRef}
@@ -72,7 +92,7 @@ export function Navigation() {
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             aria-controls="mobile-navigation"
-            onClick={() => setOpen(!open)}
+            onClick={() => setOpen((previous) => !previous)}
           >
             {open ? <X /> : <Menu />}
           </button>
@@ -88,27 +108,24 @@ export function Navigation() {
           aria-label="Navigation"
         >
           <div className="mobile-menu-top">
-            <span className="eyebrow">GOOD CONNECTIONS START HERE</span>
+            <Brand onClick={() => setOpen(false)} />
             <button
               className="menu-close"
               aria-label="Close navigation"
-              onClick={() => {
-                setOpen(false);
-                toggleRef.current?.focus();
-              }}
+              onClick={() => setOpen(false)}
             >
               <X size={23} />
             </button>
           </div>
           <nav aria-label="Mobile navigation">
             {[
-              { href: "/", label: "Home" },
-              ...navigation,
+              ...primaryNavigation,
               { href: "/contact", label: "Let’s talk" },
             ].map((item, i) => (
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={pathname === item.href ? "page" : undefined}
                 onClick={() => setOpen(false)}
               >
                 <small>0{i + 1}</small>
@@ -117,7 +134,10 @@ export function Navigation() {
               </Link>
             ))}
           </nav>
-          <p>Los Angeles roots. Global connections.</p>
+          <p>
+            <span className="status-dot" aria-hidden="true" />
+            Los Angeles roots. Global connections.
+          </p>
         </div>
       ) : null}
     </>

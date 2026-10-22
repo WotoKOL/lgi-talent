@@ -11,13 +11,14 @@ import {
   Stats,
 } from "@/components/sections";
 import { Reveal } from "@/components/motion";
+import { HomeScrollMotion } from "@/components/home-scroll-motion";
 
 export default function Home() {
   return (
     <>
       <section className="home-hero">
         <div className="hero-glow" />
-        <div className="hero-title-wrap">
+        <Reveal className="hero-title-wrap" stagger={140} duration={1100}>
           <h1>
             <span>
               LINKING BRANDS
@@ -44,9 +45,9 @@ export default function Home() {
               </ActionLink>
             </div>
           </div>
-        </div>
+        </Reveal>
         <HeroRail />
-        <div className="hero-bottomline">
+        <Reveal className="hero-bottomline" stagger={90} delay={200}>
           <div className="hero-edge-note">
             <span>DIFFERENT VOICES.</span>
             <span>Shared ambition.</span>
@@ -63,21 +64,21 @@ export default function Home() {
             <span>CALIFORNIA BASED.</span>
             <span>Globally connected.</span>
           </div>
-        </div>
+        </Reveal>
       </section>
       <div id="connections">
         <BrandWall />
         <Stats />
       </div>
-      <div className="statement-band">
+      <Reveal className="statement-band" variant="scale" duration={850}>
         <span>LOCAL KNOW-HOW.</span>
         <span className="band-star">✳</span>
         <span>GLOBAL POSSIBILITIES.</span>
         <span className="band-star">✳</span>
-      </div>
+      </Reveal>
       <Capabilities />
       <section className="creator-feature section-wrap">
-        <Reveal className="creator-feature-photo">
+        <Reveal className="creator-feature-photo" variant="image" duration={1150}>
           <Photo
             name="creator-looking-for"
             alt="Creators reviewing ideas together"
@@ -88,7 +89,7 @@ export default function Home() {
             <ArrowUpRight size={26} />
           </div>
         </Reveal>
-        <Reveal className="creator-feature-copy">
+        <Reveal className="creator-feature-copy" stagger={110} delay={100}>
           <SectionLabel number="03">FOR THE PEOPLE WHO CREATE</SectionLabel>
           <h2>
             YOU DO YOU.
@@ -112,7 +113,7 @@ export default function Home() {
         </Reveal>
       </section>
       <section className="home-work section-wrap">
-        <Reveal>
+        <Reveal variant="left" duration={1000}>
           <div className="section-heading">
             <div>
               <SectionLabel number="04">FROM IDEAS TO IMPACT</SectionLabel>
@@ -128,7 +129,12 @@ export default function Home() {
             </Link>
           </div>
         </Reveal>
-        <div className="home-work-grid">
+        <Reveal
+          className="home-work-grid"
+          variant="image"
+          stagger={170}
+          duration={1100}
+        >
           <Link href="/brand-services" className="feature-work-card">
             <Photo
               name="service-tradeshow"
@@ -163,18 +169,18 @@ export default function Home() {
               </span>
             </span>
           </Link>
-        </div>
+        </Reveal>
       </section>
       <section className="faq-section section-wrap">
-        <div>
+        <Reveal stagger={120} variant="left">
           <SectionLabel>GOOD TO KNOW</SectionLabel>
           <h2>
             A few things.
             <br />
             Before we connect.
           </h2>
-        </div>
-        <div className="faq-list">
+        </Reveal>
+        <Reveal className="faq-list" stagger={100}>
           {[
             [
               "Who does LGI work with?",
@@ -201,9 +207,10 @@ export default function Home() {
               <p>{a}</p>
             </details>
           ))}
-        </div>
+        </Reveal>
       </section>
       <CallToAction />
+      <HomeScrollMotion />
     </>
   );
 }

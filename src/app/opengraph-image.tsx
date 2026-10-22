@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
+import { site } from "@/lib/site";
 export const runtime = "nodejs";
-export const alt = "LGI — Linking Brands. Empowering Creators.";
+export const alt = "Linking Global Influencer — Linking Brands. Empowering Creators.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export default function OG() {
@@ -25,10 +26,13 @@ export default function OG() {
           alignItems: "center",
         }}
       >
-        <span style={{ fontSize: 58, fontWeight: 900, color: "#fff200" }}>
-          ✳ LGI.
-        </span>
-        <span style={{ fontSize: 18, letterSpacing: 3 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+          <span style={{ fontSize: 50, fontWeight: 900, color: "#fff200" }}>
+            ✳ {site.shortName}.
+          </span>
+          <span style={{ fontSize: 26, fontWeight: 700 }}>{site.fullName}</span>
+        </div>
+        <span style={{ fontSize: 14, letterSpacing: 2, maxWidth: 260, textAlign: "right" }}>
           LOS ANGELES ROOTS. GLOBAL REACH.
         </span>
       </div>

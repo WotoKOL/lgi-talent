@@ -1,16 +1,17 @@
 import {
   ActionLink,
-  BrandWall,
   CallToAction,
   PageHero,
   Photo,
-  Process,
   SectionLabel,
 } from "@/components/sections";
 import { Reveal } from "@/components/motion";
-import { creatorServices, creatorSteps } from "@/lib/content";
+import { CreatorBrandNetwork } from "@/components/creator-brand-network";
+import { CreatorApplicationProcess } from "@/components/creator-application-process";
+import { creatorServices } from "@/lib/content";
 import { createMetadata } from "@/lib/site";
 import { Check, ArrowUpRight } from "lucide-react";
+import "./creators.css";
 
 export const metadata = createMetadata({
   title: "Creator Management & Brand Partnerships",
@@ -20,21 +21,18 @@ export const metadata = createMetadata({
 });
 export default function CreatorsPage() {
   return (
-    <>
+    <div className="creators-page">
       <PageHero
-        eyebrow="FOR CREATORS / YOUR NEXT CHAPTER"
         title={
           <>
-            FOCUS ON
+            Focus on Creating.
             <br />
-            <em>CREATING.</em>
-            <br />
-            WE’VE GOT YOU.
+            <em>Leave the rest to LGI.</em>
           </>
         }
-        description="Global brand connections. A team in your corner. More room to build a career on your own terms."
-        image="creator-hero"
-        alt="A creator capturing content in a studio"
+        description="Join LGI to connect with leading global brands, get professional support on the business side, and unlock more opportunities to grow your career long term."
+        image="creators-hero"
+        alt="A creator adjusting a camera on a tabletop tripod in a sunlit studio"
         cta="Apply to join LGI"
         href="/contact?audience=creator"
       />
@@ -53,7 +51,7 @@ export default function CreatorsPage() {
             </p>
           </div>
         </Reveal>
-        <div className="service-grid light-service-grid">
+        <div className="service-grid light-service-grid creator-services-grid">
           {creatorServices.map((s) => (
             <Reveal key={s.title}>
               <Photo name={s.image} alt={s.title} />
@@ -64,7 +62,7 @@ export default function CreatorsPage() {
           ))}
         </div>
       </section>
-      <BrandWall full />
+      <CreatorBrandNetwork />
       <section className="creator-network section-wrap">
         <SectionLabel number="02">
           DIFFERENT VOICES. SHARED AMBITION.
@@ -117,10 +115,10 @@ export default function CreatorsPage() {
           <h2>Sound like you?</h2>
           <ul>
             {[
-              "You create quality content, consistently.",
-              "You put your audience’s trust first.",
-              "You bring professionalism to partnerships.",
-              "You’re ready for more brand opportunities.",
+              "Consistently create high-quality content",
+              "Value audience trust and professional integrity",
+              "Communicate professionally and deliver on brand partnerships",
+              "Looking to grow your brand partnerships",
             ].map((t) => (
               <li key={t}>
                 <Check size={20} />
@@ -133,8 +131,8 @@ export default function CreatorsPage() {
           </ActionLink>
         </div>
       </section>
-      <Process steps={creatorSteps} creator />
+      <CreatorApplicationProcess />
       <CallToAction creator />
-    </>
+    </div>
   );
 }

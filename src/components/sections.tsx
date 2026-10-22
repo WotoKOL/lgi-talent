@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { Reveal, Counter } from "./motion";
+import { LogoSequence } from "./logo-sequence";
 
 export function ActionLink({
   href,
@@ -84,7 +85,7 @@ export function BrandWall({ full = false }: { full?: boolean }) {
       className={`brand-wall ${full ? "brand-wall-full" : ""}`}
       aria-label="Brand network"
     >
-      <div className="brand-wall-heading">
+      <Reveal className="brand-wall-heading" stagger={140}>
         <div>
           <span className="eyebrow">IN GOOD COMPANY</span>
           <h2>
@@ -98,12 +99,12 @@ export function BrandWall({ full = false }: { full?: boolean }) {
           e-commerce, LGI works with brands across industries to bring their
           products, stories, and creators to audiences around the world.
         </p>
-      </div>
-      <div className="logo-grid">
+      </Reveal>
+      <LogoSequence>
         {logos.slice(0, full ? 17 : 12).map((name) => (
           <div key={name} className="partner-logo">
             <Image
-              src={`/logos/${name}.png`}
+              src={`/logos/transparent/${name}.png`}
               alt={
                 name === "byd"
                   ? "BYD"
@@ -120,14 +121,14 @@ export function BrandWall({ full = false }: { full?: boolean }) {
             />
           </div>
         ))}
-      </div>
+      </LogoSequence>
     </section>
   );
 }
 export function Stats() {
   return (
     <section className="stats section-wrap">
-      <Reveal className="stats-intro">
+      <Reveal className="stats-intro" variant="left" stagger={110}>
         <SectionLabel number="01">THE POWER OF CONNECTION</SectionLabel>
         <h2>
           Good people.
@@ -140,7 +141,7 @@ export function Stats() {
           Then help them make something matter.
         </p>
       </Reveal>
-      <Reveal className="stats-numbers">
+      <Reveal className="stats-numbers" variant="scale" stagger={160}>
         <Link href="/brand-services" className="stat-pathway">
           <strong>
             <Counter value={8245} suffix="+" />
@@ -174,7 +175,7 @@ export function CallToAction({ creator = false }: { creator?: boolean }) {
     <section
       className={`cta-section section-wrap${creator ? " cta-section-creator" : ""}`}
     >
-      <Reveal className="cta-layout">
+      <Reveal className="cta-layout" stagger={150} duration={1050}>
         <SectionLabel>YOUR NEXT CHAPTER</SectionLabel>
         <h2>
           {creator ? (
@@ -276,19 +277,17 @@ export function PageHero({
   alt,
   cta,
   href,
-  compact = false,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: React.ReactNode;
   description: string;
   image: string;
   alt: string;
   cta?: string;
   href?: string;
-  compact?: boolean;
 }) {
   return (
-    <section className={`page-hero ${compact ? "page-hero-compact" : ""}`}>
+    <section className="page-hero">
       <Image
         className="page-hero-image"
         src={`/images/${image}.webp`}
@@ -297,12 +296,14 @@ export function PageHero({
         sizes="100vw"
         alt={alt}
       />
-      <div className="page-hero-shade" />
+      <div className="page-hero-shade" aria-hidden="true" />
       <div className="page-hero-content">
-        <span className="eyebrow">
-          <span className="status-dot" />
-          {eyebrow}
-        </span>
+        {eyebrow ? (
+          <span className="eyebrow">
+            <span className="status-dot" aria-hidden="true" />
+            {eyebrow}
+          </span>
+        ) : null}
         <h1>{title}</h1>
         <p>{description}</p>
         {cta && href ? <ActionLink href={href}>{cta}</ActionLink> : null}
@@ -312,7 +313,11 @@ export function PageHero({
         className="hero-scroll"
         aria-label="Explore this page"
       >
-        <ArrowDown size={18} />
+        <span className="hero-scroll-icon" aria-hidden="true">
+          <span className="hero-scroll-arrow">
+            <ArrowDown size={18} />
+          </span>
+        </span>
         <span>SCROLL TO EXPLORE</span>
       </a>
     </section>

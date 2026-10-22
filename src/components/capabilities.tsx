@@ -1,9 +1,16 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type RefObject,
+} from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { brandServices, creatorServices } from "@/lib/content";
 import "./capabilities.css";
@@ -32,15 +39,169 @@ const audienceContent = {
   },
 };
 
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
+
+function subscribeToReducedMotion(onChange: () => void) {
+  const preference = window.matchMedia(reducedMotionQuery);
+  preference.addEventListener("change", onChange);
+  return () => preference.removeEventListener("change", onChange);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia(reducedMotionQuery).matches;
+}
+
+function getServerReducedMotionSnapshot() {
+  return true;
+}
+
+function useCapabilityReveal(sectionRef: RefObject<HTMLElement | null>) {
+  const revealedRef = useRef(new WeakSet<HTMLElement>());
+  const reduced = useSyncExternalStore(
+    subscribeToReducedMotion,
+    getReducedMotionSnapshot,
+    getServerReducedMotionSnapshot,
+  );
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (
+      !section ||
+      reduced ||
+      getReducedMotionSnapshot() ||
+      !("IntersectionObserver" in window) ||
+      typeof Element.prototype.animate !== "function"
+    ) return;
+
+    let active = true;
+    const revealed = revealedRef.current;
+    const registered = new Set<HTMLElement>();
+    const animations = new Map<HTMLElement, Animation>();
+
+    function clearAnimation(element: HTMLElement) {
+      animations.get(element)?.cancel();
+      animations.delete(element);
+      element.removeAttribute("data-capability-reveal-state");
+    }
+
+    function reveal(element: HTMLElement) {
+      revealed.add(element);
+      observer.unobserve(element);
+      clearAnimation(element);
+      if (!active || getReducedMotionSnapshot() || element.matches(":focus-within")) return;
+
+      const kind = element.dataset.capabilityReveal;
+      const card = kind === "card";
+      const columns = window.matchMedia("(max-width: 620px)").matches
+        ? 1
+        : window.matchMedia("(max-width: 1000px)").matches ? 2 : 3;
+      const order = Number(element.dataset.capabilityRevealOrder ?? 0);
+      const delay = card
+        ? (order % columns) * 85
+        : Number(element.dataset.capabilityRevealDelay ?? 0);
+      const tilt = card ? (order % 2 === 0 ? -1.1 : 1.1) : 0;
+      const distance = card ? 52 : kind === "title" ? 42 : 30;
+      const scale = card ? 0.965 : kind === "tabs" ? 0.99 : 1;
+
+      element.dataset.capabilityRevealState = "animating";
+      const animation = element.animate(
+        [
+          {
+            opacity: 0,
+            transform: `translate3d(0, ${distance}px, 0) rotate(${tilt}deg) scale(${scale})`,
+          },
+          { opacity: 1, transform: "translate3d(0, 0, 0) rotate(0deg) scale(1)" },
+        ],
+        {
+          duration: card ? 820 : kind === "tabs" ? 760 : 680,
+          delay,
+          easing: "cubic-bezier(.16,1,.3,1)",
+          fill: "both",
+        },
+      );
+      animations.set(element, animation);
+      animation.onfinish = () => {
+        if (animations.get(element) === animation) clearAnimation(element);
+      };
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!active || getReducedMotionSnapshot()) return;
+        for (const entry of entries) {
+          const element = entry.target as HTMLElement;
+          if (!entry.isIntersecting || revealed.has(element)) continue;
+          // Stop observing at the first entrance, including while it animates.
+          // Scrolling away must never hide or restart content already revealed.
+          reveal(element);
+        }
+      },
+      { threshold: 0.12 },
+    );
+
+    function registerTargets() {
+      if (!active || !section || getReducedMotionSnapshot()) return;
+      // AnimatePresence mounts the next panel after the previous one exits.
+      // Register that panel when it arrives, without changing its transition.
+      for (const element of section.querySelectorAll<HTMLElement>("[data-capability-reveal]")) {
+        if (registered.has(element)) continue;
+        registered.add(element);
+        const bounds = element.getBoundingClientRect();
+        if (revealed.has(element) || bounds.top < window.innerHeight) {
+          // Also preserve visible or already-passed content after hydration or
+          // a motion preference change; it does not need a scroll entrance.
+          revealed.add(element);
+          clearAnimation(element);
+          continue;
+        }
+        element.dataset.capabilityRevealState = "pending";
+        observer.observe(element);
+      }
+      for (const element of registered) {
+        if (section.contains(element)) continue;
+        observer.unobserve(element);
+        clearAnimation(element);
+        registered.delete(element);
+      }
+    }
+
+    function revealFocused(event: FocusEvent) {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const element = target.closest<HTMLElement>("[data-capability-reveal]");
+      if (element && section?.contains(element)) {
+        revealed.add(element);
+        observer.unobserve(element);
+        clearAnimation(element);
+      }
+    }
+
+    registerTargets();
+    const panelObserver = new MutationObserver(registerTargets);
+    panelObserver.observe(section, { childList: true, subtree: true });
+    section.addEventListener("focusin", revealFocused);
+
+    return () => {
+      active = false;
+      observer.disconnect();
+      panelObserver.disconnect();
+      section.removeEventListener("focusin", revealFocused);
+      registered.forEach(clearAnimation);
+    };
+  }, [sectionRef, reduced]);
+
+  return reduced;
+}
+
 export function Capabilities() {
   const [audience, setAudience] = useState<Audience>("brand");
-  const reduced = useReducedMotion();
   const id = useId();
   const sectionRef = useRef<HTMLElement>(null);
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+  const reduced = useCapabilityReveal(sectionRef);
   const content = audienceContent[audience];
   const entrance = {
-    hidden: { opacity: 0, y: reduced ? 0 : 16 },
+    hidden: { opacity: reduced ? 1 : 0, y: reduced ? 0 : 16 },
     visible: { opacity: 1, y: 0 },
   };
 
@@ -67,7 +228,7 @@ export function Capabilities() {
       id="what-we-do"
       aria-label="Our core capabilities"
     >
-      <div className="capability-section-top">
+      <div className="capability-section-top" data-capability-reveal="top">
         <div className="section-label">
           <span>02</span>OUR CORE CAPABILITIES
         </div>
@@ -80,6 +241,8 @@ export function Capabilities() {
         className="capability-switch"
         role="tablist"
         aria-label="Choose brand services or creator management"
+        data-capability-reveal="tabs"
+        data-capability-reveal-delay="75"
       >
         {audiences.map((item, index) => {
           const selected = item === audience;
@@ -159,7 +322,7 @@ export function Capabilities() {
               variants={entrance}
               transition={{ duration: reduced ? 0 : 0.35 }}
             >
-              <h2>
+              <h2 data-capability-reveal="title" data-capability-reveal-delay="90">
                 <span>{content.title}</span>{" "}
                 <em>
                   {content.emphasis.map((line, index) => (
@@ -169,7 +332,9 @@ export function Capabilities() {
                   ))}
                 </em>
               </h2>
-              <p>{content.description}</p>
+              <p data-capability-reveal="description" data-capability-reveal-delay="190">
+                {content.description}
+              </p>
             </motion.div>
 
             <div className="capability-cards">
@@ -180,7 +345,11 @@ export function Capabilities() {
                   variants={entrance}
                   transition={{ duration: reduced ? 0 : 0.4 }}
                 >
-                  <Link href={content.href}>
+                  <Link
+                    href={content.href}
+                    data-capability-reveal="card"
+                    data-capability-reveal-order={index}
+                  >
                     <div className="capability-card-image">
                       <Image
                         src={`/images/${service.image}.webp`}
@@ -209,8 +378,8 @@ export function Capabilities() {
               variants={entrance}
               transition={{ duration: reduced ? 0 : 0.3 }}
             >
-              <span>Discover what we can do together.</span>
-              <Link href={content.href}>
+              <span data-capability-reveal="footer">Discover what we can do together.</span>
+              <Link href={content.href} data-capability-reveal="footer" data-capability-reveal-delay="90">
                 {content.cta}
                 <span aria-hidden="true">
                   <ArrowUpRight size={20} />
