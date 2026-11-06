@@ -1,0 +1,55 @@
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav a {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 48px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  color: #72736b;
+  font-size: 12px;
+  white-space: nowrap;
+  transition: color 180ms ease, background 180ms ease;
+}
+
+.nav a span {
+  font-size: 9px;
+  opacity: 0.65;
+}
+
+.nav a:hover {
+  color: #111;
+  background: #eeeee8;
+}
+
+.nav a[aria-current="location"] {
+  background: #eeefcc;
+  color: #171810;
+}
+
+@media (max-width: 900px) {
+  .nav {
+    flex-direction: row;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    padding-block: 8px;
+  }
+
+  .nav a {
+    gap: 8px;
+    min-height: 44px;
+    padding-inline: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav a {
+    transition: none;
+  }
+}

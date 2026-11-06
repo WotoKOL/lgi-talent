@@ -8,7 +8,7 @@ import "./footer.css";
 const footerNavigation = [
   { href: "/", label: "Home" },
   ...navigation,
-  { href: "/contact", label: "Contact" },
+  { href: "/contact", label: "Contact Us" },
 ];
 
 export function Footer() {

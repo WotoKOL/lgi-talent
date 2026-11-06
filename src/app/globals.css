@@ -1177,6 +1177,9 @@ a:hover .photo img {
   object-fit: cover;
   object-position: center;
 }
+.page-hero-image-grayscale {
+  filter: grayscale(1);
+}
 .page-hero-shade {
   position: absolute;
   inset: 0;

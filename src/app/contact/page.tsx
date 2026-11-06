@@ -1,10 +1,10 @@
 import { ContactForm } from "@/components/contact-form";
-import { PageHero, SectionLabel } from "@/components/sections";
 import { createMetadata, site } from "@/lib/site";
 import { ArrowUpRight, MapPin } from "lucide-react";
+import "./contact.css";
 
 export const metadata = createMetadata({
-  title: "Contact LGI — Start a Brand or Creator Partnership",
+  title: "Contact Us — Start a Brand or Creator Partnership",
   description:
     "Have a campaign in mind or ready for your next creator opportunity? Get in touch with the LGI team in Greater Los Angeles.",
   path: "/contact",
@@ -16,36 +16,19 @@ export default async function ContactPage({
 }) {
   const { audience } = await searchParams;
   return (
-    <>
-      <PageHero
-        title={
-          <>
-            Let’s Start a{" "}
-            <br />
-            <em>Conversation.</em>
-          </>
-        }
-        description="Whether you’re looking for creators or new brand opportunities, the LGI team is here to help."
-        image="hero-community"
-        alt="Friends looking together toward the sky"
-        cta="Tell us what’s next"
-        href="#main-content"
-      />
+    <div className="contact-page">
       <section
         id="main-content"
-        className="contact-section section-wrap light-section"
+        className="contact-page__inquiry"
+        aria-labelledby="contact-title"
       >
-        <SectionLabel>GOOD THINGS START WITH A CONVERSATION</SectionLabel>
-        <div className="contact-heading">
-          <h2>
-            You’re in the
+        <div className="contact-page__heading">
+          <p className="eyebrow">LET’S MAKE SOMETHING HAPPEN</p>
+          <h1 id="contact-title">Contact Us.</h1>
+          <p className="contact-page__description">
+            Great partnerships start with a conversation.
             <br />
-            right place.
-          </h2>
-          <p>
-            Looking for creators or new brand opportunities?
-            <br />
-            Choose your path and tell us a little about yourself.
+            Tell us about your brand, your content, or what comes next.
           </p>
         </div>
         <ContactForm
@@ -72,6 +55,6 @@ export default async function ContactPage({
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

@@ -1,6 +1,8 @@
+import { caseStudiesEnabled } from "./features";
+
 export const brandServices = [
   {
-    title: "Creator Strategy",
+    title: "Campaign strategy",
     text: "Right creator mix, content direction, and timeline — built around your market and goals.",
     image: "brand-strategy",
     tag: "01 / STRATEGY",
@@ -132,6 +134,6 @@ export const creatorSteps = [
 export const navigation = [
   { href: "/brand-services", label: "For Brands" },
   { href: "/creators", label: "For Creators" },
-  { href: "/case-studies", label: "Case Studies" },
+  ...(caseStudiesEnabled ? [{ href: "/case-studies", label: "Case Studies" }] : []),
   { href: "/about", label: "About Us" },
 ];

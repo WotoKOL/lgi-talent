@@ -55,69 +55,57 @@ export function Photo({
         fill
         alt={alt}
         sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 40vw"
-        priority={priority}
+        preload={priority}
       />
     </div>
   );
 }
 export function BrandWall({ full = false }: { full?: boolean }) {
   const logos = [
-    "samsung",
-    "stanley",
-    "gymshark",
-    "huawei",
-    "byd",
-    "hisense",
-    "lenovo",
-    "haier",
-    "tcl",
-    "tiktok",
-    "dji",
-    "anker",
-    "alibaba",
-    "temu",
-    "oppo",
-    "ugreen",
-    "xiaomi",
+    ["samsung", "Samsung"],
+    ["stanley", "Stanley"],
+    ["gymshark", "Gymshark"],
+    ["huawei", "Huawei"],
+    ["byd", "BYD"],
+    ["hisense", "Hisense"],
+    ["lenovo", "Lenovo"],
+    ["haier", "Haier"],
+    ["tcl", "TCL"],
+    ["tiktok", "TikTok"],
+    ["dji", "DJI"],
+    ["anker", "Anker"],
+    ["alibaba", "Alibaba Group"],
+    ["temu", "Temu"],
+    ["oppo", "OPPO"],
+    ["ugreen", "UGREEN"],
+    ["xiaomi", "Xiaomi"],
   ];
   return (
     <section
-      className={`brand-wall ${full ? "brand-wall-full" : ""}`}
-      aria-label="Brand network"
+      className={`brand-partners${full ? " brand-partners--full" : ""}`}
+      aria-labelledby="brand-partners-title"
     >
-      <Reveal className="brand-wall-heading" stagger={140}>
-        <div>
-          <span className="eyebrow">IN GOOD COMPANY</span>
-          <h2>
-            Trusted by global brands.
-            <br />
-            <span>Connected by LGI.</span>
-          </h2>
-        </div>
-        <p className="brand-wall-description">
+      <Reveal className="brand-partners__heading" stagger={100}>
+        <h2 id="brand-partners-title">
+          Trusted by
+          <br />
+          global brands.
+        </h2>
+        <p className="brand-partners__description">
           From consumer tech and smart home to digital platforms and global
           e-commerce, LGI works with brands across industries to bring their
           products, stories, and creators to audiences around the world.
         </p>
       </Reveal>
-      <LogoSequence>
-        {logos.slice(0, full ? 17 : 12).map((name) => (
-          <div key={name} className="partner-logo">
+      <LogoSequence variant="home">
+        {logos.map(([file, name]) => (
+          <div key={file} className="brand-partners__logo">
             <Image
-              src={`/logos/transparent/${name}.png`}
-              alt={
-                name === "byd"
-                  ? "BYD"
-                  : name === "dji"
-                    ? "DJI"
-                    : name === "tcl"
-                      ? "TCL"
-                      : name === "tiktok"
-                        ? "TikTok"
-                        : name[0].toUpperCase() + name.slice(1)
-              }
-              width={140}
-              height={70}
+              src={`/logos/transparent/${file}.png`}
+              alt={name}
+              width={160}
+              height={80}
+              sizes="160px"
             />
           </div>
         ))}
@@ -130,11 +118,6 @@ export function Stats() {
     <section className="stats section-wrap">
       <Reveal className="stats-intro" variant="left" stagger={110}>
         <SectionLabel number="01">THE POWER OF CONNECTION</SectionLabel>
-        <h2>
-          Good people.
-          <br />
-          Great things.
-        </h2>
         <p>
           We bring brands and creators together.
           <br />
@@ -275,6 +258,7 @@ export function PageHero({
   description,
   image,
   alt,
+  grayscale = false,
   cta,
   href,
 }: {
@@ -283,16 +267,17 @@ export function PageHero({
   description: string;
   image: string;
   alt: string;
+  grayscale?: boolean;
   cta?: string;
   href?: string;
 }) {
   return (
     <section className="page-hero">
       <Image
-        className="page-hero-image"
+        className={`page-hero-image${grayscale ? " page-hero-image-grayscale" : ""}`}
         src={`/images/${image}.webp`}
         fill
-        priority
+        preload
         sizes="100vw"
         alt={alt}
       />

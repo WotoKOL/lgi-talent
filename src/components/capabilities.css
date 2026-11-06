@@ -1,6 +1,6 @@
 .capabilities {
   position: relative;
-  background: radial-gradient(ellipse at 100% 12%, #d2bc0d08, transparent 45%), var(--ink);
+  background: #000;
 }
 
 .capabilities [data-capability-reveal-state="pending"] {
@@ -151,23 +151,83 @@
   line-height: 1.85;
 }
 
-.capability-cards {
+.capability-slider-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  color: #b7b9ad;
+  font-size: 12px;
+}
+
+.capability-slider-controls > div {
+  display: flex;
+  gap: 10px;
+}
+
+.capability-slider-controls button {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 38px 26px;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 1px solid #ffffff65;
+  border-radius: 50%;
+  color: #fff;
+}
+
+.capability-slider-controls button:hover:not(:disabled) {
+  background: #fff;
+  border-color: #fff;
+  color: #000;
+}
+
+.capability-slider-controls button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.capability-cards {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: clamp(28px, 4vw, 64px);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 3px;
+  scrollbar-width: none;
+  padding: 6px 3px 18px;
+  cursor: grab;
+  user-select: none;
+}
+
+.capability-cards[data-dragging="true"] {
+  cursor: grabbing;
+  scroll-snap-type: none;
+}
+
+.capability-cards::-webkit-scrollbar {
+  display: none;
 }
 
 .capability-card {
+  display: flex;
+  flex: 0 0 340px;
   min-width: 0;
+  scroll-snap-align: start;
 }
 
 .capability-card > a {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  border-bottom: 1px solid #f5f4ee2b;
+  width: 100%;
+  overflow: hidden;
+  border: 2px solid #ffffffe0;
+  border-radius: 32px;
+  background: #000;
+  cursor: inherit;
   transition: border-color 250ms;
-  transform-origin: 50% 85%;
 }
 
 .capability-card > a:hover,
@@ -178,105 +238,43 @@
 .capability-card-image {
   position: relative;
   overflow: hidden;
-  aspect-ratio: 1.48;
-  border-radius: 3px;
+  aspect-ratio: 5 / 6;
+  flex-shrink: 0;
   background: #272920;
-}
-
-.capability-card-image::after {
-  position: absolute;
-  inset: 0;
-  content: "";
-  pointer-events: none;
-  background: linear-gradient(transparent 60%, #11130a75);
-}
-
-.capability-card-image::before {
-  position: absolute;
-  z-index: 1;
-  inset: 60% 0 0;
-  content: "";
-  pointer-events: none;
-  background: linear-gradient(transparent, #ffc63030);
-  opacity: 0;
-  transition: opacity 400ms;
 }
 
 .capability-card-image > img {
   object-fit: cover;
+  filter: grayscale(1);
   transition: transform 650ms var(--ease);
 }
 
 .capability-card > a:hover .capability-card-image > img,
 .capability-card > a:focus-visible .capability-card-image > img {
-  transform: scale(1.045);
-}
-
-.capability-card > a:hover .capability-card-image::before,
-.capability-card > a:focus-visible .capability-card-image::before {
-  opacity: 1;
-}
-
-.capability-card-number {
-  position: absolute;
-  z-index: 2;
-  left: 20px;
-  bottom: 13px;
-  font-family: var(--font-display), Impact, sans-serif;
-  font-size: 42px;
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: #fff;
-}
-
-.capability-card-number > span {
-  font-family: var(--font-body), Arial, sans-serif;
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  opacity: 0.85;
-}
-
-.capability-card-arrow {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  position: absolute;
-  z-index: 2;
-  right: 18px;
-  bottom: 15px;
-  border-radius: 50%;
-  background: var(--paper);
-  color: var(--ink);
-  transition: background 250ms, transform 350ms var(--ease);
-}
-
-.capability-card > a:hover .capability-card-arrow,
-.capability-card > a:focus-visible .capability-card-arrow {
-  background: var(--yellow);
-  transform: rotate(45deg);
+  transform: scale(1.035);
 }
 
 .capability-card-copy {
   flex: 1;
-  padding: 24px 0 27px;
-  min-height: 185px;
+  padding: 25px 22px 28px;
+  text-align: center;
 }
 
 .capability-card-copy h3 {
-  font-size: clamp(21px, 1.7vw, 28px);
-  line-height: 1.2;
+  color: #fff;
+  font-size: 30px;
+  line-height: 1.12;
   letter-spacing: -0.035em;
+  text-wrap: balance;
 }
 
 .capability-card-copy p {
-  margin-top: 14px;
-  max-width: 440px;
-  font-size: 13px;
-  line-height: 1.8;
-  color: #b2b6a7;
+  max-width: 38ch;
+  margin: 12px auto 0;
+  color: #eee;
+  font-size: 12px;
+  line-height: 1.4;
+  text-wrap: pretty;
 }
 
 .capability-more {
@@ -322,14 +320,6 @@
     min-height: 165px;
     padding-inline: 42px;
   }
-
-  .capability-card-copy {
-    min-height: 205px;
-  }
-
-  .capability-card-copy p {
-    font-size: 15px;
-  }
 }
 
 @media (max-width: 1000px) {
@@ -363,14 +353,6 @@
   .capability-overview > p {
     max-width: 640px;
     font-size: 14px;
-  }
-
-  .capability-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .capability-card-copy {
-    min-height: 185px;
   }
 }
 
@@ -453,39 +435,19 @@
   }
 
   .capability-cards {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 30px;
+    gap: 20px;
   }
 
-  .capability-card-image {
-    aspect-ratio: 1.55;
-  }
-
-  .capability-card-number {
-    font-size: 38px;
-    left: 16px;
-    bottom: 15px;
-  }
-
-  .capability-card-arrow {
-    width: 36px;
-    height: 36px;
-    right: 15px;
+  .capability-card {
+    flex-basis: min(300px, calc(100% - 30px));
   }
 
   .capability-card-copy {
-    min-height: 0;
-    padding-block: 21px 25px;
+    padding: 23px 20px 25px;
   }
 
   .capability-card-copy h3 {
-    font-size: 23px;
-  }
-
-  .capability-card-copy p {
-    margin-top: 12px;
-    font-size: 13px;
-    line-height: 1.8;
+    font-size: 27px;
   }
 
   .capability-more {

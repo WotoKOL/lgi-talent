@@ -2,92 +2,111 @@
 
 import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { campaignTypes } from "@/lib/content";
-import { Photo } from "./sections";
+import { caseStudies, type CaseAudience } from "@/lib/case-studies";
+import { caseDetailHref, caseListHref, type CaseFilter } from "@/lib/case-study-navigation";
+import styles from "./work-gallery.module.css";
 
-export function WorkGallery() {
-  const [filter, setFilter] = useState("All");
-  const [audience, setAudience] = useState("Brands");
-  const items =
-    audience === "Brands"
-      ? campaignTypes
-      : [
-          {
-            title: "Brand deals that fit your world",
-            category: "Online",
-            image: "creator-opportunities",
-            text: "Connect with global brands that share your interests and respect your audience.",
-          },
-          {
-            title: "Beyond the feed",
-            category: "Offline",
-            image: "creator-looking-for",
-            text: "Meet brands in person through events, experiences, and creative collaborations.",
-          },
-          {
-            title: "Space to build what comes next",
-            category: "Online",
-            image: "creator-growth",
-            text: "Explore repeat partnerships and long-term commercial opportunities with a dedicated team.",
-          },
-        ];
+const filters = [
+  { label: "All", value: "All" },
+  { label: "Online", value: "Online" },
+  { label: "On-site", value: "Offline" },
+] as const;
+
+const audiences = ["Brands", "Creators"] as const;
+
+export function WorkGallery({
+  initialAudience = "Brands",
+  initialFilter = "All",
+}: {
+  initialAudience?: CaseAudience;
+  initialFilter?: CaseFilter;
+}) {
+  const [filter, setFilter] = useState<CaseFilter>(initialFilter);
+  const [audience, setAudience] = useState<CaseAudience>(initialAudience);
+  const items = caseStudies.filter((item) => item.audience === audience);
+
+  function updateSelection(nextAudience: CaseAudience, nextFilter: CaseFilter) {
+    setAudience(nextAudience);
+    setFilter(nextFilter);
+    const href = caseListHref(nextAudience, nextFilter).split("#")[0];
+    window.history.replaceState(null, "", `${href}${window.location.hash}`);
+  }
+
   return (
     <>
-      <div className="work-controls">
-        <div className="audience-tabs" aria-label="Partnership type">
-          {["Brands", "Creators"].map((a) => (
+      <div className={styles.controls}>
+        <div
+          className={styles.audiences}
+          role="group"
+          aria-label="Partnership type"
+        >
+          {audiences.map((value) => (
             <button
-              key={a}
-              aria-pressed={audience === a}
-              className={audience === a ? "is-selected" : ""}
-              onClick={() => {
-                setAudience(a);
-                setFilter("All");
-              }}
+              key={value}
+              type="button"
+              className={styles.audience}
+              aria-pressed={value === audience}
+              aria-controls="case-grid"
+              onClick={() => updateSelection(value, "All")}
             >
-              {a === "Brands" ? "Brand partnerships" : "Creator opportunities"}
-              <ArrowUpRight size={16} />
+              {value === "Brands" ? "Brand partnerships" : "Creator opportunities"}
+              <ArrowUpRight size={16} aria-hidden="true" />
             </button>
           ))}
         </div>
-        <div className="filter-tabs" aria-label="Filter campaign formats">
-          {["All", "Online", "Offline"].map((f) => (
+        <div
+          className={styles.filters}
+          role="group"
+          aria-label="Filter campaign formats"
+        >
+          {filters.map(({ label, value }) => (
             <button
-              key={f}
-              aria-pressed={f === filter}
-              onClick={() => setFilter(f)}
+              key={value}
+              type="button"
+              className={styles.filter}
+              aria-pressed={value === filter}
+              aria-controls="case-grid"
+              onClick={() => updateSelection(audience, value)}
             >
-              {f}
+              {label}
             </button>
           ))}
         </div>
       </div>
-      <div className="work-grid" aria-live="polite">
+      <div id="case-grid" className={styles.grid} aria-live="polite">
         {items
           .filter((i) => filter === "All" || i.category === filter)
           .map((item) => (
             <Link
-              href={`/contact${audience === "Creators" ? "?audience=creator" : ""}`}
-              key={item.title}
-              className="work-card"
+              href={caseDetailHref(item.slug, filter)}
+              key={item.slug}
+              className={styles.card}
             >
-              <Photo name={item.image} alt={item.title} />
-              <div className="work-card-meta">
-                <span>
-                  {item.category} /{" "}
-                  {audience === "Brands"
-                    ? "CAMPAIGN FORMAT"
-                    : "CREATOR SUPPORT"}
-                </span>
-                <ArrowUpRight size={21} />
+              <div className={styles.cover}>
+                <Image
+                  src={`/images/case-formats/${item.image}.webp`}
+                  alt=""
+                  fill
+                  sizes="(max-width: 700px) 100vw, (max-width: 1000px) 50vw, (max-width: 1440px) 33vw, 414px"
+                />
               </div>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
+              <div className={styles.body}>
+                <div className={styles.meta}>
+                  <span>
+                    {item.category} /{" "}
+                    {audience === "Brands" ? "CAMPAIGN FORMAT" : "CREATOR SUPPORT"}
+                  </span>
+                  <ArrowUpRight size={21} aria-hidden="true" />
+                </div>
+                <h3 className={styles.title}>{item.cardTitle}</h3>
+                <p className={styles.description}>{item.cardDescription}</p>
+              </div>
             </Link>
           ))}
       </div>
-      <div className="work-enquiry">
+      <div className={styles.enquiry}>
         <p>Looking for examples in your industry?</p>
         <Link href="/contact" className="text-link">
           Ask our team for a relevant selection

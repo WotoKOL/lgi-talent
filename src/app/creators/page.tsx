@@ -6,12 +6,20 @@ import {
   SectionLabel,
 } from "@/components/sections";
 import { Reveal } from "@/components/motion";
-import { CreatorBrandNetwork } from "@/components/creator-brand-network";
 import { CreatorApplicationProcess } from "@/components/creator-application-process";
+import { CreatorDirectory } from "@/components/creator-directory";
 import { creatorServices } from "@/lib/content";
 import { createMetadata } from "@/lib/site";
-import { Check, ArrowUpRight } from "lucide-react";
+import { Check } from "lucide-react";
+import localFont from "next/font/local";
 import "./creators.css";
+
+const creatorHeading = localFont({
+  src: "../../../public/fonts/home-heading-black.ttf",
+  weight: "900",
+  variable: "--font-home-heading",
+  display: "swap",
+});
 
 export const metadata = createMetadata({
   title: "Creator Management & Brand Partnerships",
@@ -32,11 +40,11 @@ export default function CreatorsPage() {
         }
         description="Join LGI to connect with leading global brands, get professional support on the business side, and unlock more opportunities to grow your career long term."
         image="creators-hero"
-        alt="A creator adjusting a camera on a tabletop tripod in a sunlit studio"
-        cta="Apply to join LGI"
+        alt="Two creators recording a conversation in a light-filled podcast studio"
+        cta="Start Your Creator Journey"
         href="/contact?audience=creator"
       />
-      <section id="main-content" className="section-wrap light-section">
+      <section id="main-content" className="creator-support section-wrap light-section">
         <Reveal>
           <SectionLabel number="01">YOUR IDEAS. OUR SUPPORT.</SectionLabel>
           <div className="section-heading">
@@ -53,7 +61,7 @@ export default function CreatorsPage() {
         </Reveal>
         <div className="service-grid light-service-grid creator-services-grid">
           {creatorServices.map((s) => (
-            <Reveal key={s.title}>
+            <Reveal className="creator-service" key={s.title}>
               <Photo name={s.image} alt={s.title} />
               <span className="eyebrow">{s.tag}</span>
               <h3>{s.title}</h3>
@@ -62,58 +70,18 @@ export default function CreatorsPage() {
           ))}
         </div>
       </section>
-      <CreatorBrandNetwork />
-      <section className="creator-network section-wrap">
-        <SectionLabel number="02">
-          DIFFERENT VOICES. SHARED AMBITION.
-        </SectionLabel>
-        <div className="section-heading">
-          <h2>
-            A WORLD OF
-            <br />
-            <em>POINTS OF VIEW.</em>
-          </h2>
-          <p>
-            200+ exclusive creators. Different passions, platforms, and
-            perspectives. One network that makes more possible.
-          </p>
-        </div>
-        <div className="network-photo-grid">
-          {[
-            ["hero-gamer", "Gaming & tech"],
-            ["hero-fashion", "Fashion & lifestyle"],
-            ["hero-traveler", "Travel & adventure"],
-            ["hero-skater", "Sports & outdoor"],
-          ].map(([img, label]) => (
-            <div key={img}>
-              <Photo name={img} alt={`${label} creator imagery`} />
-              <span>
-                {label}
-                <ArrowUpRight size={17} />
-              </span>
-            </div>
-          ))}
-        </div>
-        <div className="network-bottom">
-          <p>
-            YouTube · Instagram · TikTok
-            <br />
-            <span>North America, Europe, and beyond.</span>
-          </p>
-          <ActionLink href="/contact?audience=creator">
-            Find your place with us
-          </ActionLink>
-        </div>
-      </section>
+      <CreatorDirectory className={creatorHeading.variable} />
       <section className="creator-fit section-wrap">
-        <Photo
-          name="creator-looking-for"
-          alt="Creators discussing a project together"
-        />
-        <div>
+        <Reveal className="creator-fit__intro">
           <SectionLabel>WHO WE’RE LOOKING FOR</SectionLabel>
           <h2>Sound like you?</h2>
-          <ul>
+          <p>
+            Your perspective is your strength. We’re here to help you build
+            lasting partnerships around it.
+          </p>
+        </Reveal>
+        <Reveal className="creator-fit__details">
+          <ul className="creator-fit__list">
             {[
               "Consistently create high-quality content",
               "Value audience trust and professional integrity",
@@ -129,7 +97,7 @@ export default function CreatorsPage() {
           <ActionLink href="/contact?audience=creator">
             Let’s get to know you
           </ActionLink>
-        </div>
+        </Reveal>
       </section>
       <CreatorApplicationProcess />
       <CallToAction creator />

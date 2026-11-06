@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { caseStudiesEnabled } from "./features";
 
 function getSiteOrigin() {
   const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim();
@@ -51,7 +52,7 @@ export const siteRoutes = [
   "/",
   "/brand-services",
   "/creators",
-  "/case-studies",
+  ...(caseStudiesEnabled ? ["/case-studies"] : []),
   "/about",
   "/contact",
 ] as const;

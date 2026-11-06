@@ -1,7 +1,9 @@
-import { HeroRail } from "@/components/hero-rail";
+import { HomeHeroBackground } from "@/components/home-hero-background";
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, MoveUpRight } from "lucide-react";
+import localFont from "next/font/local";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { Capabilities } from "@/components/capabilities";
+import { HomeTalentCarousel } from "@/components/home-talent-carousel";
 import {
   ActionLink,
   BrandWall,
@@ -12,29 +14,32 @@ import {
 } from "@/components/sections";
 import { Reveal } from "@/components/motion";
 import { HomeScrollMotion } from "@/components/home-scroll-motion";
+import "./home.css";
+
+const heroHeading = localFont({
+  src: "../../public/fonts/home-heading-black.ttf",
+  weight: "900",
+  variable: "--font-home-heading",
+  display: "swap",
+});
 
 export default function Home() {
   return (
     <>
-      <section className="home-hero">
-        <div className="hero-glow" />
+      <section className={`home-hero home-hero-influencer ${heroHeading.variable}`}>
+        <HomeHeroBackground />
         <Reveal className="hero-title-wrap" stagger={140} duration={1100}>
           <h1>
-            <span>
-              LINKING BRANDS
-              <span className="hero-title-star" aria-hidden="true">
-                ✳
-              </span>
-            </span>
-            <span className="gradient-text">EMPOWERING CREATORS.</span>
+            <span>Influencer</span>{" "}
+            <span>Marketing</span>
           </h1>
           <div className="hero-description">
             <p>
               LGI is a U.S.-based global influencer marketing and creator
-              management agency,
+              management agency.
               <br className="desktop-break" />
               {" "}
-              helping brands connect locally and creators grow globally.
+              We connect brands with creators and creators with brands.
             </p>
             <div className="hero-buttons">
               <ActionLink href="/contact">
@@ -46,25 +51,17 @@ export default function Home() {
             </div>
           </div>
         </Reveal>
-        <HeroRail />
-        <Reveal className="hero-bottomline" stagger={90} delay={200}>
-          <div className="hero-edge-note">
-            <span>DIFFERENT VOICES.</span>
-            <span>Shared ambition.</span>
-          </div>
-          <a href="#connections" className="connection-scroll">
-            <span className="scroll-orbit" aria-hidden="true">
-              <span className="scroll-arrow">
-                <ArrowDown size={20} />
-              </span>
+        <a
+          href="#connections"
+          className="home-hero-scroll"
+          aria-label="Explore our brand connections"
+        >
+          <span className="scroll-orbit" aria-hidden="true">
+            <span className="scroll-arrow">
+              <ArrowDown size={20} />
             </span>
-            <span>MEET YOUR NEXT CONNECTION</span>
-          </a>
-          <div className="hero-edge-note">
-            <span>CALIFORNIA BASED.</span>
-            <span>Globally connected.</span>
-          </div>
-        </Reveal>
+          </span>
+        </a>
       </section>
       <div id="connections">
         <BrandWall />
@@ -77,56 +74,22 @@ export default function Home() {
         <span className="band-star">✳</span>
       </Reveal>
       <Capabilities />
-      <section className="creator-feature section-wrap">
-        <Reveal className="creator-feature-photo" variant="image" duration={1150}>
-          <Photo
-            name="creator-looking-for"
-            alt="Creators reviewing ideas together"
-          />
-          <div className="photo-sticker">
-            <span>YOUR VOICE.</span>
-            <span>YOUR NEXT CHAPTER.</span>
-            <ArrowUpRight size={26} />
-          </div>
-        </Reveal>
-        <Reveal className="creator-feature-copy" stagger={110} delay={100}>
-          <SectionLabel number="03">FOR THE PEOPLE WHO CREATE</SectionLabel>
-          <h2>
-            YOU DO YOU.
-            <br />
-            WE’LL DO
-            <br />
-            <em>THE REST.</em>
-          </h2>
-          <p>
-            You bring the ideas. We bring brand opportunities, business support,
-            and a team that gets it. More time for what you love. More space for
-            what’s next.
-          </p>
-          <ActionLink href="/creators">Meet your next chapter</ActionLink>
-          <div className="platform-list">
-            <span>YouTube</span>
-            <span>Instagram</span>
-            <span>TikTok</span>
-            <MoveUpRight size={20} />
-          </div>
-        </Reveal>
-      </section>
-      <section className="home-work section-wrap">
+      <HomeTalentCarousel className={heroHeading.variable} />
+      <section id="brands-and-creators" className="home-work home-audience section-wrap" aria-labelledby="home-audience-heading">
         <Reveal variant="left" duration={1000}>
           <div className="section-heading">
             <div>
-              <SectionLabel number="04">FROM IDEAS TO IMPACT</SectionLabel>
-              <h2>
-                FROM THE FEED.
+              <SectionLabel number="04">BRANDS & CREATORS</SectionLabel>
+              <h2 id="home-audience-heading">
+                LET’S BUILD
                 <br />
-                TO THE <em>REAL WORLD.</em>
+                <em>WHAT’S NEXT.</em>
               </h2>
             </div>
-            <Link href="/case-studies" className="text-link">
-              Explore our approach
-              <ArrowUpRight size={20} />
-            </Link>
+            <p>
+              Building a brand or growing your creative career?
+              Find the right way to work with LGI.
+            </p>
           </div>
         </Reveal>
         <Reveal
@@ -135,39 +98,57 @@ export default function Home() {
           stagger={170}
           duration={1100}
         >
-          <Link href="/brand-services" className="feature-work-card">
+          <Link
+            href="/brand-services"
+            className="feature-work-card"
+            aria-labelledby="home-brands-label home-brands-title home-brands-cta"
+            aria-describedby="home-brands-description"
+          >
             <Photo
-              name="service-tradeshow"
-              alt="Brand representatives and creators at a consumer technology trade show"
+              name="brand-hero"
+              alt="A team planning a brand campaign together"
             />
-            <span className="work-overlay">
-              <span>ON THE GROUND</span>
-              <strong>
-                Big moments.
+            <div className="work-overlay">
+              <span id="home-brands-label">FOR BRANDS</span>
+              <h3 id="home-brands-title" className="work-card-title">
+                Turn attention
                 <br />
-                Made personal.
-              </strong>
-              <span className="round-arrow">
-                <ArrowUpRight />
+                into impact.
+              </h3>
+              <p id="home-brands-description" className="work-card-description">
+                Build creator partnerships and campaigns that move your brand forward.
+              </p>
+              <span className="work-card-cta">
+                <span id="home-brands-cta">Explore Brand Services</span>
+                <span className="round-arrow" aria-hidden="true"><ArrowUpRight /></span>
               </span>
-            </span>
+            </div>
           </Link>
-          <Link href="/brand-services" className="feature-work-card">
+          <Link
+            href="/creators"
+            className="feature-work-card"
+            aria-labelledby="home-creators-label home-creators-title home-creators-cta"
+            aria-describedby="home-creators-description"
+          >
             <Photo
-              name="service-launch"
-              alt="A content creator presenting a technology product"
+              name="creators-hero"
+              alt="Two creators recording a conversation in a podcast studio"
             />
-            <span className="work-overlay">
-              <span>ON YOUR SCREEN</span>
-              <strong>
-                Great products.
+            <div className="work-overlay">
+              <span id="home-creators-label">FOR CREATORS</span>
+              <h3 id="home-creators-title" className="work-card-title">
+                Create your way.
                 <br />
-                The right voices.
-              </strong>
-              <span className="round-arrow">
-                <ArrowUpRight />
+                Grow with LGI.
+              </h3>
+              <p id="home-creators-description" className="work-card-description">
+                Find brand opportunities and business support, with more space to create.
+              </p>
+              <span className="work-card-cta">
+                <span id="home-creators-cta">Explore Creator Management</span>
+                <span className="round-arrow" aria-hidden="true"><ArrowUpRight /></span>
               </span>
-            </span>
+            </div>
           </Link>
         </Reveal>
       </section>

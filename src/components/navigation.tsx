@@ -13,6 +13,8 @@ const lightHeaderRoutes = new Set(["/privacy", "/cookies", "/terms"]);
 export function Navigation() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const isActive = (href: string) =>
+    pathname === href || (href !== "/" && pathname.startsWith(`${href}/`));
   const toggleRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -69,7 +71,7 @@ export function Navigation() {
             <Link
               key={item.href}
               href={item.href}
-              aria-current={pathname === item.href ? "page" : undefined}
+              aria-current={isActive(item.href) ? "page" : undefined}
             >
               {item.label}
             </Link>
@@ -81,7 +83,7 @@ export function Navigation() {
             href="/contact"
             aria-current={pathname === "/contact" ? "page" : undefined}
           >
-            <span>Let’s talk</span>
+            <span>Contact Us</span>
             <span className="header-cta-arrow" aria-hidden="true">
               <ArrowUpRight size={16} />
             </span>
@@ -120,12 +122,12 @@ export function Navigation() {
           <nav aria-label="Mobile navigation">
             {[
               ...primaryNavigation,
-              { href: "/contact", label: "Let’s talk" },
+              { href: "/contact", label: "Contact Us" },
             ].map((item, i) => (
               <Link
                 key={item.href}
                 href={item.href}
-                aria-current={pathname === item.href ? "page" : undefined}
+                aria-current={isActive(item.href) ? "page" : undefined}
                 onClick={() => setOpen(false)}
               >
                 <small>0{i + 1}</small>

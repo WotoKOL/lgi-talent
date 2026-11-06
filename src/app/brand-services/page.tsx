@@ -1,10 +1,8 @@
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { PageHero, Photo, SectionLabel } from "@/components/sections";
 import { Reveal } from "@/components/motion";
 import { BrandPartnershipProcess } from "@/components/brand-partnership-process";
 import { BrandCampaignCTA } from "@/components/brand-campaign-cta";
+import { BrandServiceGallery } from "@/components/brand-service-gallery";
 import { brandServices } from "@/lib/content";
 import { createMetadata } from "@/lib/site";
 import "./brand-services.css";
@@ -15,38 +13,6 @@ export const metadata = createMetadata({
     "Creator strategy, content collaboration, and local U.S. execution. LGI connects your brand with the right creators in the U.S. and Europe.",
   path: "/brand-services",
 });
-const campaigns = [
-  [
-    "Influencer Marketing",
-    "We build creator strategies from planning and talent selection to content and reporting.",
-    "service-influencer",
-  ],
-  [
-    "Product Launch Campaigns",
-    "Drive awareness and conversation through unboxings, reviews, tutorials, and real-world content.",
-    "service-launch",
-  ],
-  [
-    "Social Media Campaigns",
-    "Build brand awareness and trust through consistent, authentic creator content.",
-    "service-social",
-  ],
-  [
-    "Trade Show & Event Marketing",
-    "From CES and IFA to on-site content, we handle creator outreach, event coverage, and execution.",
-    "service-tradeshow",
-  ],
-  [
-    "Brand Events & Creator Activations",
-    "Bring local creators to pop-ups, launches, sports events, and brand experiences.",
-    "service-events",
-  ],
-  [
-    "Long-Term Creator Partnerships",
-    "Build lasting creator relationships, content assets, and brand presence over time.",
-    "service-partnerships",
-  ],
-];
 export default function BrandsPage() {
   return (
     <>
@@ -62,7 +28,8 @@ export default function BrandsPage() {
         }
         description="LGI helps brands go to market with creator strategy, talent matching, content creation, U.S.-based management, and global reach—all in one place."
         image="brand-hero"
-        alt="Two creators capturing a moment with a camera"
+        alt="A marketing team planning a brand campaign together"
+        grayscale
         cta="Start a campaign"
         href="/contact"
       />
@@ -102,9 +69,7 @@ export default function BrandsPage() {
           <SectionLabel number="02">BUILT AROUND YOUR NEXT MOVE</SectionLabel>
           <div className="section-heading">
             <h2 id="brand-services-heading">
-              Where do you
-              <br />
-              want to go?
+              Our Service
             </h2>
             <p>
               A launch, an event, a new audience. We build the creator program
@@ -112,38 +77,7 @@ export default function BrandsPage() {
             </p>
           </div>
         </Reveal>
-        <div className="brand-service-list">
-          {campaigns.map(([title, text, img], i) => (
-            <Reveal key={title}>
-              <Link
-                className="brand-service-row"
-                href="/contact"
-                aria-label={`Discuss ${title}`}
-                aria-describedby={`brand-service-description-${i + 1}`}
-              >
-                <span className="brand-service-number" aria-hidden="true">
-                  <span>{String(i + 1).padStart(2, "0")}</span>
-                </span>
-                <span className="brand-service-image">
-                  <Image
-                    src={`/images/${img}.png`}
-                    fill
-                    sizes="(max-width: 600px) 96px, (max-width: 1000px) 150px, 190px"
-                    alt=""
-                  />
-                </span>
-                <div className="brand-service-copy">
-                  <h3>{title}</h3>
-                  <p id={`brand-service-description-${i + 1}`}>{text}</p>
-                </div>
-                <span className="brand-service-action" aria-hidden="true">
-                  <span>Let’s Talk</span>
-                  <ArrowUpRight size={18} />
-                </span>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
+        <BrandServiceGallery />
       </section>
       <BrandPartnershipProcess />
       <BrandCampaignCTA />

@@ -20,7 +20,7 @@ export default function Privacy() {
         },
         {
           title: "How an enquiry is delivered",
-          text: "The contact form either prepares an email in your chosen email application or securely forwards the enquiry through the configured delivery service. An email draft is only sent when you send it from your email application. Delivery providers process information as needed to deliver your message.",
+          text: "The contact form securely sends your enquiry to Forminit, our form-processing provider, which stores the information so the LGI team can review and respond to your request. Forminit also processes technical submission details to deliver the service and protect against spam. If you choose an email link instead, your email is sent through your chosen email provider.",
         },
         {
           title: "Technical information",

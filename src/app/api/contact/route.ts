@@ -148,11 +148,21 @@ export async function POST(request: Request) {
 
   const company = value("company");
   const productType = value("productType");
-  const fullName = value("fullName");
+  const firstName = value("firstName");
+  const lastName = value("lastName");
+  const fullName = `${firstName} ${lastName}`;
+  const phone = value("phone");
   const whatsapp = value("whatsapp");
   const channelUrl = value("channelUrl");
-  if (!fullName || fullName.length > 120)
-    fieldErrors.fullName = "Enter a full name of up to 120 characters.";
+  if (!firstName || firstName.length > 120)
+    fieldErrors.firstName = "Enter a first name of up to 120 characters.";
+  if (!lastName || lastName.length > 120)
+    fieldErrors.lastName = "Enter a last name of up to 120 characters.";
+  if (
+    phone.length > 80 ||
+    (input.phone !== undefined && input.phone !== null && typeof input.phone !== "string")
+  )
+    fieldErrors.phone = "Enter a phone number of up to 80 characters.";
 
   if (audience === "brand") {
     if (!company || company.length > 120)
@@ -187,8 +197,11 @@ export async function POST(request: Request) {
 
   const inquiry = {
     audience,
+    firstName,
+    lastName,
     fullName,
     email,
+    phone,
     message,
     ...(audience === "brand"
       ? { company, productType }
@@ -204,9 +217,11 @@ export async function POST(request: Request) {
     const lines = [
       "Hello LGI team,",
       "",
-      `Full name: ${fullName}`,
+      `First name: ${firstName}`,
+      `Last name: ${lastName}`,
       ...(audience === "brand" ? [`Company: ${company}`] : []),
       `Email: ${email}`,
+      ...(phone ? [`Phone: ${phone}`] : []),
       ...(audience === "brand"
         ? [`Product category: ${productType}`]
         : [

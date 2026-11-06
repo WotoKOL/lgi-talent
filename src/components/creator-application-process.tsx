@@ -1,15 +1,31 @@
-import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import { Reveal } from "./motion";
 import "./creator-application-process.css";
 
 const steps = [
-  "Submit Your Profile",
-  "Team Review",
-  "Initial Conversation",
-  "Partnership Confirmation",
-  "Creator Profile Setup",
-  "Brand Matching",
+  {
+    title: "Submit Your Profile",
+    text: "Share your channels, audience, and what you want to build next.",
+  },
+  {
+    title: "Team Review",
+    text: "We review your content, past partnerships, and growth goals.",
+  },
+  {
+    title: "Initial Conversation",
+    text: "Let’s talk about your creative direction and the support you need.",
+  },
+  {
+    title: "Partnership Confirmation",
+    text: "We discuss the terms and make sure the partnership is the right fit.",
+  },
+  {
+    title: "Creator Profile Setup",
+    text: "We get to know your content and prepare your profile for brand opportunities.",
+  },
+  {
+    title: "Brand Matching",
+    text: "We connect your voice with relevant brands and partnership opportunities.",
+  },
 ];
 
 export function CreatorApplicationProcess() {
@@ -20,57 +36,40 @@ export function CreatorApplicationProcess() {
     >
       <div className="creator-application__inner">
         <Reveal className="creator-application__heading">
-          <div>
-            <p className="creator-application__eyebrow">
-              <span>03</span> THE APPLICATION PROCESS
-            </p>
-            <h2 id="creator-application-title">
-              Your path to <span>LGI.</span>
-            </h2>
-          </div>
+          <p className="creator-application__eyebrow">
+            <span>03</span> THE APPLICATION PROCESS
+          </p>
+          <h2 id="creator-application-title">
+            Your path to <span>LGI.</span>
+          </h2>
           <p className="creator-application__description">
-            LGI evaluates each creator based on content, audience, past brand
-            partnerships, and growth goals. Submitting an application does not
-            guarantee representation. If your profile fits, our team will reach
-            out to discuss next steps.
+            A thoughtful process to find the right fit, from your first hello
+            to your next brand partnership.
           </p>
         </Reveal>
 
-        <div className="creator-application__scene">
-          <Reveal className="creator-application__image" variant="scale">
-            <Image
-              src="/images/creator-application-scene.png"
-              alt="Black, cream, and translucent creator portfolios with black-and-white portrait photographs"
-              fill
-              unoptimized
-              sizes="(max-width: 760px) 100vw, 92vw"
-            />
-          </Reveal>
+        <ol className="creator-application__steps" role="list">
+          {steps.map((step, index) => (
+            <li className="creator-application__step" key={step.title}>
+              <Reveal
+                className="creator-application__entry"
+                delay={(index % 3) * 80}
+                duration={850}
+              >
+                <span className="creator-application__number" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3>{step.title}</h3>
+                <p>{step.text}</p>
+              </Reveal>
+            </li>
+          ))}
+        </ol>
 
-          <ol className="creator-application__steps" role="list">
-            {steps.map((step, index) => (
-              <li className="creator-application__step" key={step}>
-                <Reveal
-                  className="creator-application__card"
-                  delay={index * 100}
-                  duration={850}
-                >
-                  <span className="creator-application__number" aria-hidden="true">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <h3>{step}</h3>
-                </Reveal>
-                {index < steps.length - 1 ? (
-                  <ArrowRight
-                    className="creator-application__connector"
-                    aria-hidden="true"
-                    strokeWidth={1.2}
-                  />
-                ) : null}
-              </li>
-            ))}
-          </ol>
-        </div>
+        <p className="creator-application__note">
+          Applying does not guarantee representation. If your profile fits,
+          our team will be in touch to discuss next steps.
+        </p>
       </div>
     </section>
   );

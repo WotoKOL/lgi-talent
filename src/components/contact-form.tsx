@@ -1,15 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment, useId, useState, type FormEvent } from "react";
+import { Forminit } from "forminit";
+import { Fragment, useEffect, useId, useRef, useState, type FormEvent } from "react";
+import {
+  buildContactSubmission,
+  CONTACT_FORMINIT_ID,
+  contactSubmissionError,
+  type ContactAudience,
+} from "@/lib/forminit-contact";
 
-type Audience = "brand" | "creator";
+type Audience = ContactAudience;
 type FieldErrors = Partial<Record<string, string>>;
 type Feedback = {
-  kind: "error" | "success" | "email";
+  kind: "error" | "success";
   message: string;
-  mailto?: string;
 } | null;
+
+const forminit = new Forminit();
 
 const productTypes = [
   "Gaming & peripherals",
@@ -44,20 +52,32 @@ function validate(
   const errors: FieldErrors = {};
   const value = (name: string) => String(data[name] ?? "").trim();
 
-  if (!value("fullName")) errors.fullName = "Enter your full name.";
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value("email"))) {
+  if (!value("firstName") || value("firstName").length > 120)
+    errors.firstName = "Enter a first name of up to 120 characters.";
+  if (!value("lastName") || value("lastName").length > 120)
+    errors.lastName = "Enter a last name of up to 120 characters.";
+  if (value("phone").length > 80)
+    errors.phone = "Keep your phone number under 80 characters.";
+  if (
+    value("email").length > 254 ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value("email"))
+  ) {
     errors.email = "Enter a valid email address.";
   }
 
   if (audience === "brand") {
-    if (!value("company")) errors.company = "Enter your company name.";
+    if (!value("company") || value("company").length > 120)
+      errors.company = "Enter a company name of up to 120 characters.";
     if (!productTypes.includes(value("productType"))) {
       errors.productType = "Choose your product category.";
     }
   } else {
+    if (value("whatsapp").length > 80)
+      errors.whatsapp = "Keep your WhatsApp number under 80 characters.";
     try {
       const channel = new URL(value("channelUrl"));
       if (
+        value("channelUrl").length > 2048 ||
         !["https:", "http:"].includes(channel.protocol) ||
         !channel.hostname ||
         channel.username ||
@@ -70,6 +90,8 @@ function validate(
     }
   }
 
+  if (value("message").length > 3000)
+    errors.message = "Keep your message under 3,000 characters.";
   if (data.consent !== true)
     errors.consent = "Please agree to the privacy policy.";
   return errors;
@@ -81,20 +103,36 @@ export function ContactForm({ audience = "brand" }: { audience?: Audience }) {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [feedback, setFeedback] = useState<Feedback>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const submittingRef = useRef(false);
+  const pendingFocusRef = useRef<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (!isSubmitting && pendingFocusRef.current) {
+      document.getElementById(pendingFocusRef.current)?.focus();
+      pendingFocusRef.current = undefined;
+    }
+  }, [isSubmitting]);
 
   function focusError(nextErrors: FieldErrors) {
     const firstError = Object.keys(nextErrors)[0];
-    if (firstError) document.getElementById(`${formId}-${firstError}`)?.focus();
+    if (!firstError) return;
+    const target = `${formId}-${firstError}`;
+    if (submittingRef.current) {
+      // Provider errors arrive while inputs are disabled; focus after unlocking.
+      pendingFocusRef.current = target;
+    } else {
+      document.getElementById(target)?.focus();
+    }
   }
 
   function selectAudience(nextAudience: Audience) {
+    if (submittingRef.current) return;
     setActiveAudience(nextAudience);
     setErrors({});
     setFeedback(null);
   }
 
   function handleChange(event: FormEvent<HTMLFormElement>) {
-    // An edited inquiry must never retain an email draft for older field values.
     if (feedback) setFeedback(null);
     const name = (event.target as HTMLInputElement).name;
     if (name && errors[name]) {
@@ -108,13 +146,15 @@ export function ContactForm({ audience = "brand" }: { audience?: Audience }) {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (isSubmitting) return;
+    if (submittingRef.current) return;
 
     const form = event.currentTarget;
     const formData = new FormData(form);
     const data: Record<string, unknown> = {
       audience: activeAudience,
-      fullName: formData.get("fullName"),
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      phone: formData.get("phone"),
       email: formData.get("email"),
       message: formData.get("message"),
       website: formData.get("website"),
@@ -138,58 +178,39 @@ export function ContactForm({ audience = "brand" }: { audience?: Audience }) {
       return;
     }
 
+    if (formData.get("website")) {
+      setFeedback({
+        kind: "error",
+        message: "We couldn’t process this inquiry. Please email market@lgi.com.",
+      });
+      return;
+    }
+
+    const submission = buildContactSubmission(formData, activeAudience);
+    submittingRef.current = true;
     setIsSubmitting(true);
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        signal: AbortSignal.timeout(15_000),
-      });
-      const result = (await response.json()) as {
-        mode?: string;
-        message?: string;
-        mailto?: string;
-        fieldErrors?: FieldErrors;
-      };
-
-      if (!response.ok) {
-        if (result.fieldErrors) {
-          setErrors(result.fieldErrors);
-          focusError(result.fieldErrors);
-        }
+      const { data: received, error } = await forminit.submit(
+        CONTACT_FORMINIT_ID,
+        submission,
+      );
+      if (error || typeof received?.hashId !== "string" || !received.hashId) {
+        const result = contactSubmissionError(error);
+        setErrors(result.fieldErrors);
+        focusError(result.fieldErrors);
         setFeedback({
           kind: "error",
-          message:
-            result.message ||
-            "We couldn’t send your inquiry. Please try again.",
+          message: result.message,
         });
         return;
       }
 
-      if (
-        result.mode === "email" &&
-        result.mailto?.startsWith("mailto:market@lgi.com?")
-      ) {
-        setFeedback({
-          kind: "email",
-          message:
-            "Your email draft is ready. Open your email app below, then send it to our team.",
-          mailto: result.mailto,
-        });
-      } else if (result.mode === "delivered") {
-        setFeedback({
-          kind: "success",
-          message:
-            "Thanks for reaching out. Your inquiry has been received, and our team will be in touch.",
-        });
-        form.reset();
-      } else {
-        setFeedback({
-          kind: "error",
-          message: "We couldn’t confirm delivery. Please email market@lgi.com.",
-        });
-      }
+      setFeedback({
+        kind: "success",
+        message:
+          "Thanks for reaching out. Your inquiry has been received, and our team will be in touch.",
+      });
+      form.reset();
     } catch {
       setFeedback({
         kind: "error",
@@ -197,6 +218,7 @@ export function ContactForm({ audience = "brand" }: { audience?: Audience }) {
           "We couldn’t send your inquiry. Please try again, or email market@lgi.com.",
       });
     } finally {
+      submittingRef.current = false;
       setIsSubmitting(false);
     }
   }
@@ -272,18 +294,61 @@ export function ContactForm({ audience = "brand" }: { audience?: Audience }) {
         </p>
         <div className="form-grid">
           <div className="form-field">
-            <label htmlFor={`${formId}-fullName`}>
-              Full name <span aria-hidden="true">*</span>
+            <label htmlFor={`${formId}-firstName`}>
+              First Name <span aria-hidden="true">*</span>
             </label>
             <input
-              {...fieldProps("fullName")}
-              autoComplete="name"
-              placeholder="Your name"
+              {...fieldProps("firstName")}
+              autoComplete="given-name"
+              placeholder="First name"
               maxLength={120}
               required
               disabled={isSubmitting}
             />
-            {fieldError("fullName")}
+            {fieldError("firstName")}
+          </div>
+          <div className="form-field">
+            <label htmlFor={`${formId}-lastName`}>
+              Last Name <span aria-hidden="true">*</span>
+            </label>
+            <input
+              {...fieldProps("lastName")}
+              autoComplete="family-name"
+              placeholder="Last name"
+              maxLength={120}
+              required
+              disabled={isSubmitting}
+            />
+            {fieldError("lastName")}
+          </div>
+          <div className="form-field">
+            <label htmlFor={`${formId}-email`}>
+              Email address <span aria-hidden="true">*</span>
+            </label>
+            <input
+              {...fieldProps("email")}
+              type="email"
+              autoComplete="email"
+              placeholder="you@example.com"
+              maxLength={254}
+              required
+              disabled={isSubmitting}
+            />
+            {fieldError("email")}
+          </div>
+          <div className="form-field">
+            <label htmlFor={`${formId}-phone`}>
+              Phone <span className="field-optional">(optional)</span>
+            </label>
+            <input
+              {...fieldProps("phone")}
+              type="tel"
+              autoComplete="tel"
+              placeholder="Include your country code"
+              maxLength={80}
+              disabled={isSubmitting}
+            />
+            {fieldError("phone")}
           </div>
           {activeAudience === "brand" ? (
             <Fragment key="brand-fields">
@@ -331,7 +396,7 @@ export function ContactForm({ audience = "brand" }: { audience?: Audience }) {
               <input
                 {...fieldProps("whatsapp")}
                 type="tel"
-                autoComplete="tel"
+                autoComplete="off"
                 placeholder="Include your country code"
                 maxLength={80}
                 disabled={isSubmitting}
@@ -339,21 +404,6 @@ export function ContactForm({ audience = "brand" }: { audience?: Audience }) {
               {fieldError("whatsapp")}
             </div>
           )}
-          <div className="form-field">
-            <label htmlFor={`${formId}-email`}>
-              Email address <span aria-hidden="true">*</span>
-            </label>
-            <input
-              {...fieldProps("email")}
-              type="email"
-              autoComplete="email"
-              placeholder="you@example.com"
-              maxLength={254}
-              required
-              disabled={isSubmitting}
-            />
-            {fieldError("email")}
-          </div>
           {activeAudience === "creator" && (
             <div className="form-field">
               <label htmlFor={`${formId}-channelUrl`}>
@@ -461,11 +511,6 @@ export function ContactForm({ audience = "brand" }: { audience?: Audience }) {
             aria-live="polite"
           >
             <p>{feedback.message}</p>
-            {feedback.mailto && (
-              <a className="button button-primary" href={feedback.mailto}>
-                Open email draft <span aria-hidden="true">↗</span>
-              </a>
-            )}
           </div>
         )}
       </form>

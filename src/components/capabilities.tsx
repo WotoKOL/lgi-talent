@@ -8,11 +8,11 @@ import {
   useSyncExternalStore,
   type RefObject,
 } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { brandServices, creatorServices } from "@/lib/content";
+import { CapabilityCarousel } from "./capability-carousel";
 import "./capabilities.css";
 
 type Audience = "brand" | "creator";
@@ -337,41 +337,14 @@ export function Capabilities() {
               </p>
             </motion.div>
 
-            <div className="capability-cards">
-              {content.services.map((service, index) => (
-                <motion.article
-                  className="capability-card"
-                  key={service.title}
-                  variants={entrance}
-                  transition={{ duration: reduced ? 0 : 0.4 }}
-                >
-                  <Link
-                    href={content.href}
-                    data-capability-reveal="card"
-                    data-capability-reveal-order={index}
-                  >
-                    <div className="capability-card-image">
-                      <Image
-                        src={`/images/${service.image}.webp`}
-                        fill
-                        alt=""
-                        sizes="(max-width: 620px) 100vw, (max-width: 1000px) 50vw, 33vw"
-                      />
-                      <span className="capability-card-number" aria-hidden="true">
-                        0{index + 1}<span> / 06</span>
-                      </span>
-                      <span className="capability-card-arrow" aria-hidden="true">
-                        <ArrowUpRight size={22} strokeWidth={1.6} />
-                      </span>
-                    </div>
-                    <div className="capability-card-copy">
-                      <h3>{service.title}</h3>
-                      <p>{service.text}</p>
-                    </div>
-                  </Link>
-                </motion.article>
-              ))}
-            </div>
+            <CapabilityCarousel
+              key={audience}
+              id={`${id}-services`}
+              services={content.services}
+              href={content.href}
+              label={`${audience === "brand" ? "Brand" : "Creator"} services`}
+              reduced={reduced}
+            />
 
             <motion.div
               className="capability-more"

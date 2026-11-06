@@ -1,104 +1,61 @@
 "use client";
 
-import { useLayoutEffect, useRef, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
+import { Pause, Play } from "lucide-react";
+import "./logo-sequence.css";
 
-const driftDuration = 650;
-const driftStagger = 55;
+export function LogoSequence({
+  children,
+  variant = "default",
+}: {
+  children: ReactNode;
+  variant?: "default" | "home";
+}) {
+  const [paused, setPaused] = useState(false);
+  const trackId = useId();
+  const controlLabel = paused
+    ? "Resume brand logo scrolling"
+    : "Pause brand logo scrolling";
 
-export function LogoSequence({ children }: { children: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    const grid = ref.current;
-    if (!grid) return;
-
-    if (
-      typeof window.matchMedia !== "function" ||
-      typeof IntersectionObserver === "undefined" ||
-      typeof grid.animate !== "function" ||
-      grid.getBoundingClientRect().bottom <= 0
-    ) {
-      grid.dataset.logoSequence = "complete";
-      return;
-    }
-
-    const logos = Array.from(grid.children).filter(
-      (element): element is HTMLElement => element instanceof HTMLElement,
-    );
-    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const animations = new Set<Animation>();
-    let observer: IntersectionObserver | undefined;
-    let started = false;
-    let finished = false;
-
-    function finish() {
-      finished = true;
-      observer?.disconnect();
-      animations.forEach((animation) => animation.cancel());
-      animations.clear();
-      grid!.dataset.logoSequence = "complete";
-    }
-
-    function enter() {
-      if (started || finished) return;
-      started = true;
-      observer?.disconnect();
-      if (preference.matches) {
-        finish();
-        return;
-      }
-      grid!.dataset.logoSequence = "playing";
-      animations.forEach((animation) => animation.play());
-    }
-
-    function onPreferenceChange(event: MediaQueryListEvent) {
-      if (event.matches) finish();
-    }
-
-    preference.addEventListener("change", onPreferenceChange);
-    grid.addEventListener("focusin", finish);
-    if (preference.matches || !logos.length || grid.contains(document.activeElement)) {
-      finish();
-    } else {
-      try {
-        // Grid placement follows DOM order at every breakpoint: each row drifts
-        // down from left to right, then continues with the next row.
-        logos.forEach((logo, index) => {
-          const animation = logo.animate([
-            { opacity: 0, transform: "translate3d(0, -24px, 0)" },
-            { opacity: 1, transform: "translate3d(0, 0, 0)" },
-          ], {
-            duration: driftDuration,
-            delay: index * driftStagger,
-            easing: "cubic-bezier(.22,.8,.25,1)",
-            fill: "both",
-          });
-          // Prepare before paint, keeping server-rendered logos visible when
-          // JavaScript or motion support is unavailable.
-          animation.pause();
-          animation.currentTime = 0;
-          animations.add(animation);
-          animation.addEventListener("finish", () => {
-            animations.delete(animation);
-            animation.cancel();
-            if (!animations.size) finish();
-          }, { once: true });
-        });
-        observer = new IntersectionObserver((entries) => {
-          if (entries.some((entry) => entry.isIntersecting)) enter();
-        }, { threshold: 0, rootMargin: "0px 0px -8% 0px" });
-        observer.observe(grid);
-      } catch {
-        finish();
-      }
-    }
-
-    return () => {
-      finish();
-      preference.removeEventListener("change", onPreferenceChange);
-      grid.removeEventListener("focusin", finish);
-    };
-  }, []);
-
-  return <div ref={ref} className="logo-grid" data-logo-sequence="idle">{children}</div>;
+  return (
+    <div
+      className={`logo-marquee${variant === "home" ? " logo-marquee--home" : ""}`}
+      data-paused={paused}
+    >
+      <div
+        className="logo-marquee__window"
+        tabIndex={variant === "home" ? 0 : undefined}
+        role={variant === "home" ? "group" : undefined}
+        aria-label={
+          variant === "home"
+            ? "Partner brands. Hover or focus to pause scrolling."
+            : undefined
+        }
+      >
+        <div className="logo-marquee__track" id={trackId}>
+          <div className="logo-marquee__group">{children}</div>
+          <div className="logo-marquee__group" aria-hidden="true" inert>
+            {children}
+          </div>
+        </div>
+      </div>
+      {variant === "default" ? (
+        <button
+          className="logo-marquee__toggle"
+          type="button"
+          aria-label={controlLabel}
+          aria-controls={trackId}
+          aria-pressed={paused}
+          title={controlLabel}
+          onClick={() => setPaused((previous) => !previous)}
+        >
+          {paused ? (
+            <Play size={14} aria-hidden="true" />
+          ) : (
+            <Pause size={14} aria-hidden="true" />
+          )}
+        </button>
+      ) : null}
+    </div>
+  );
 }
