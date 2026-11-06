@@ -46,7 +46,7 @@ Both contact tabs submit through the official `forminit` browser SDK to **one ex
 | First / last name | `fi-sender-firstName` / `fi-sender-lastName` | Both |
 | Email | `fi-sender-email` | Both |
 | Optional phone | `fi-sender-phone` | Both |
-| Optional message | `fi-text-message` | Both |
+| Plans (required) | `fi-text-message` | Both |
 | Company | `fi-sender-company` | Brand |
 | Product category | `fi-select-productType` | Brand |
 | Optional WhatsApp | `fi-phone-whatsapp` | Creator |
@@ -55,7 +55,7 @@ Both contact tabs submit through the official `forminit` browser SDK to **one ex
 | Source / submission time | `fi-text-source` / `fi-text-submittedAt` | Both |
 | Hidden spam trap | `_gotcha` | Both |
 
-Each submission includes the same field names. Fields exclusive to the other audience are empty and Forminit ignores them; company and product category are required only for brands, and channel URL only for creators. Optional fields may remain empty. Non-empty phone and WhatsApp values must include a valid international country code. Curly apostrophes in sender names are normalized for Forminit's name validation.
+Each submission includes the same field names. Fields exclusive to the other audience are empty and Forminit ignores them; company and product category are required only for brands, and channel URL only for creators. Plans are required for both audiences, reject empty or whitespace-only input, and allow up to 3,000 characters. Optional fields may remain empty. Non-empty phone and WhatsApp values must include a valid international country code. Curly apostrophes in sender names are normalized for Forminit's name validation.
 
 Review submissions in the existing form's inbox at [app.forminit.com](https://app.forminit.com), using `audience` to distinguish brands from creators. Keep the form in **Public** submission mode for browser submissions. The current free plan allows 100 submissions per month shared by both audiences; new submissions are rejected once the allowance is exhausted. If Authorized domains are configured, include the site's actual host and any intended test hosts; unmatched submissions can land in Spam. Do not set a site-wide `Referrer-Policy: no-referrer` for a domain-restricted form. Any future Content Security Policy must allow `https://forminit.com` in `connect-src`.
 

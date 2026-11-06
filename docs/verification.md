@@ -84,7 +84,9 @@ Production browser checks at 1440px and 390px, including a desktop reload, confi
 
 ## Contact flow
 
-Both audiences require first name, last name, valid email, and privacy consent. Phone is optional. Brands also require a company and one of 23 product categories; creators require a valid HTTP(S) channel URL and can provide WhatsApp.
+Both audiences require first name, last name, valid email, plans, and privacy consent. Plans reject empty or whitespace-only input and allow up to 3,000 characters. Phone is optional. Brands also require a company and one of 23 product categories; creators require a valid HTTP(S) channel URL and can provide WhatsApp.
+
+After making plans required, six focused browser checks passed: each audience rejects empty and whitespace-only plans without making a Forminit request, and accepts valid plans through an intercepted request. Both tabs display the required marker, expose `textarea.required`, and focus the plans field on a validation error. There were no browser exceptions or real Forminit submissions. TypeScript and targeted ESLint checks also passed.
 
 The website now submits directly through the official Forminit browser SDK to the single existing free-plan form `m5lh8nrxrei`. `fi-text-audience` distinguishes brand and creator inquiries. Both paths share the same 14-field schema, including empty values for the other audience's exclusive fields. Forminit ignores these empty values. `src/lib/forminit-contact.ts` defines the mapping, normalizes curly apostrophes in sender names, and translates provider field errors into the existing form errors.
 

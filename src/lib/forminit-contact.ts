@@ -79,7 +79,7 @@ const fieldErrors: Record<string, { field: string; message: string }> = {
   },
   message: {
     field: "message",
-    message: "Keep your message under 3,000 characters.",
+    message: "Enter your plans using 1 to 3,000 characters.",
   },
   consent: {
     field: "consent",

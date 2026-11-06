@@ -90,7 +90,9 @@ function validate(
     }
   }
 
-  if (value("message").length > 3000)
+  if (!value("message"))
+    errors.message = "Tell us a little about your plans.";
+  else if (value("message").length > 3000)
     errors.message = "Keep your message under 3,000 characters.";
   if (data.consent !== true)
     errors.consent = "Please agree to the privacy policy.";
@@ -423,8 +425,7 @@ export function ContactForm({ audience = "brand" }: { audience?: Audience }) {
           )}
           <div className="form-field field-full">
             <label htmlFor={`${formId}-message`}>
-              A little about your plans{" "}
-              <span className="field-optional">(optional)</span>
+              A little about your plans <span aria-hidden="true">*</span>
             </label>
             <textarea
               {...fieldProps("message")}
@@ -435,6 +436,7 @@ export function ContactForm({ audience = "brand" }: { audience?: Audience }) {
               }
               rows={4}
               maxLength={3000}
+              required
               disabled={isSubmitting}
             />
             {fieldError("message")}

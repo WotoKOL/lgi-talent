@@ -134,7 +134,9 @@ export async function POST(request: Request) {
   if (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     fieldErrors.email = "Enter a valid email address.";
   }
-  if (message.length > 3000)
+  if (!message)
+    fieldErrors.message = "Tell us a little about your plans.";
+  else if (message.length > 3000)
     fieldErrors.message = "Keep your message under 3,000 characters.";
   if (
     input.message !== undefined &&
