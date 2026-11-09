@@ -252,7 +252,6 @@
 
 .capability-card-image > img {
   object-fit: cover;
-  filter: grayscale(1);
   transition: transform 650ms var(--ease);
 }
 
