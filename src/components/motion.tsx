@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 
 type RevealVariant = "rise" | "left" | "right" | "scale" | "image";
 type RevealProps = {
@@ -168,7 +168,7 @@ export function Counter({
   suffix?: string;
 }) {
   const ref = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
+  useLayoutEffect(() => {
     const element = ref.current;
     if (!element || typeof window.matchMedia !== "function") return;
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -176,6 +176,7 @@ export function Counter({
     let frame = 0;
     let observer: IntersectionObserver | undefined;
     let finished = false;
+    let started = false;
 
     function showFinalValue() {
       finished = true;
@@ -189,16 +190,25 @@ export function Counter({
     }
 
     preference.addEventListener("change", motionChanged);
-    if (preference.matches || typeof IntersectionObserver === "undefined") {
+    // Keep the complete value in server HTML and when restoring a visible or
+    // already-passed section. Only reset below the viewport, before paint, so a
+    // visible final value never jumps backwards when hydration attaches.
+    if (
+      preference.matches ||
+      typeof IntersectionObserver === "undefined" ||
+      element.getBoundingClientRect().top < window.innerHeight
+    ) {
       showFinalValue();
     } else {
+      element.textContent = numberFormatter.format(0) + suffix;
       observer = new IntersectionObserver((entries) => {
-        if (finished || !entries.some((entry) => entry.isIntersecting)) return;
+        if (finished || started || !entries.some((entry) => entry.isIntersecting)) return;
+        started = true;
         observer?.disconnect();
         const start = performance.now();
         function update(now: number) {
           if (finished) return;
-          const progress = Math.min((now - start) / 1600, 1);
+          const progress = Math.min((now - start) / 1800, 1);
           if (progress >= 1) {
             showFinalValue();
           } else {
@@ -209,7 +219,7 @@ export function Counter({
           }
         }
         frame = requestAnimationFrame(update);
-      }, { threshold: 0, rootMargin: "0px 0px -8% 0px" });
+      }, { threshold: 0.35, rootMargin: "0px 0px -12% 0px" });
       observer.observe(element);
     }
     return () => {
@@ -218,5 +228,11 @@ export function Counter({
     };
   }, [value, suffix]);
 
-  return <span ref={ref}>{numberFormatter.format(value) + suffix}</span>;
+  const finalText = numberFormatter.format(value) + suffix;
+  return (
+    <span>
+      <span className="counter-accessible-value">{finalText}</span>
+      <span ref={ref} aria-hidden="true">{finalText}</span>
+    </span>
+  );
 }

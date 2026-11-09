@@ -1,5 +1,28 @@
 # Verification notes
 
+The **November 9, 2026 pre-publication revision** below takes precedence over the historical checks in this file. Its source is section 7 of the user's local `官网修改 (1).docx`, including images 57–71, followed by the user's additional Home label and shared CTA instructions. Historical references to a single logo row, the brand description, the statistics introduction, numbered Home section labels, and the old CTA palette describe superseded versions.
+
+## November 9, 2026 pre-publication revision
+
+The complete DOCX revision passed `npm run lint`, `npm run typecheck`, `npm run build`, and `git diff --check` before the latest follow-up changes to Home label numbers and shared CTA styling. The following production browser checks were completed against that DOCX revision:
+
+- Home at 1440px, 390px, and 320px has no horizontal viewport overflow. The brand heading is centered on one line; its former description and the statistics introduction are absent.
+- The two original-color brand rows move in opposite directions. Keyboard focus pauses both rows, and reduced motion disables their animation.
+- The statistics labels appear above their values. A live intermediate value of `653+` was observed before the figures settled at `8,245+` and `200+`; the accessible text retains the complete final values.
+- The audience heading stays on one line, without its former ending punctuation, and the exact new `Connecting global brands and creators to turn influence into lasting impact.` description appears beneath it.
+- The Home CTA's softer yellow background, revised typography, and button layout were visually reviewed on desktop and at 320px.
+- Creators at 390px uses 14px, weight-600, near-white profile metadata. Cards retain equal 556px heights in that check, and no broken profile images were found.
+- Brand Services at 320px exposes `GO GLOBAL` without a following punctuation mark in the accessibility tree.
+- Contact at 320px has no horizontal overflow; all mailto links use `linkingglobal@wotokol.com`, and the footer address wraps visibly rather than clipping.
+
+The source and current application files contain no remaining old email address. Targeted lint and whitespace checks also passed for the copy and long-email layout changes. Email delivery and external form-provider account settings were not exercised by these layout checks.
+
+The user's subsequent follow-up removes numeric prefixes from Home section labels and extends the softer yellow CTA typography and pill-button treatment to every shared `CallToAction`. The Creators CTA retains its own copy and `/contact?audience=creator` destination.
+
+The final follow-up passes `npm run lint`, `npm run typecheck`, `npm run build`, and `git diff --check`. In the production build, Home at 390px exposes `OUR CORE CAPABILITIES` and `BRANDS & CREATORS` without numeric or replacement star prefixes; the existing FAQ and CTA stars remain. Home, About, and Creators were checked at 1440×1000 and 320×568: all six page/viewport combinations use the same pale-yellow gradient, body heading font, olive emphasis, and 100px-radius pill buttons. Each intended heading line occupies one line, the buttons fit, and no page has horizontal viewport overflow. About and Creators desktop/mobile screenshots were visually reviewed. Clicking the About CTA reaches the brand Contact form; clicking the production Creators CTA reaches `/contact?audience=creator` with the creator tab selected. No warning or error logs were captured during the final browser checks. Temporary reduced-motion and viewport overrides were reset afterward. No deployment or Git commit has been made for this revision.
+
+## Earlier publication status and verification history
+
 Current publication status: Case Studies is temporarily hidden at the user's request. Navigation and sitemap omit it, and its list/detail routes return the shared 404 page. The earlier Case Studies verification sections below record the retained implementation before it was hidden.
 
 The hidden-state production check confirms HTTP 404 for the list, its query-string variant, all nine details, and two unknown nested paths. All five remaining public pages return HTTP 200 with no case links; desktop navigation, the mobile menu, and footer omit the entry, and the sitemap contains no case URLs. Hidden routes contain no case content and have noindex metadata. No browser exceptions occur. Lint, the production build (including TypeScript), and whitespace checks pass.

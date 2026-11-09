@@ -100,8 +100,8 @@ export function contactSubmissionError(error?: SubmissionError) {
   return {
     message:
       error?.error === "TOO_MANY_REQUESTS" || error?.code === 429
-        ? "Please wait a few seconds before trying again, or email market@lgi.com."
-        : "We couldn’t send your inquiry. Please try again, or email market@lgi.com.",
+        ? "Please wait a few seconds before trying again, or email linkingglobal@wotokol.com."
+        : "We couldn’t send your inquiry. Please try again, or email linkingglobal@wotokol.com.",
     fieldErrors: {},
   };
 }

@@ -37,7 +37,7 @@ export const site = {
     "Linking Global Influencer (LGI) is a global influencer marketing and creator management agency based in Greater Los Angeles. We connect brands with creators, authentic content, and local expertise across the U.S. and Europe.",
   origin,
   url: origin,
-  email: "market@lgi.com",
+  email: "linkingglobal@wotokol.com",
   location: "Greater Los Angeles, California",
   address: {
     streetAddress: "17800 Castleton St Ste 665",

@@ -19,7 +19,7 @@ export default function BrandsPage() {
       <PageHero
         title={
           <>
-            GO GLOBAL.
+            GO GLOBAL
             <br />
             WITH THE
             <br />

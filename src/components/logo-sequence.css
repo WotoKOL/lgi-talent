@@ -13,6 +13,9 @@
   width: max-content;
   animation: brand-logo-scroll 48s linear infinite;
 }
+.logo-marquee[data-direction="right"] .logo-marquee__track {
+  animation-direction: reverse;
+}
 .logo-marquee__group {
   display: flex;
   align-items: center;
@@ -60,21 +63,23 @@
   color: var(--ink);
 }
 .brand-partners__heading {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-  align-items: center;
-  gap: clamp(36px, 6vw, 100px);
+  min-width: 0;
+  text-align: center;
 }
 .brand-partners__heading h2 {
-  font-size: clamp(36px, 3.8vw, 54px);
+  font-size: clamp(28px, 6vw, 60px);
   line-height: 1.03;
   letter-spacing: -0.025em;
+  white-space: nowrap;
 }
-.brand-partners__description {
-  max-width: 610px;
-  color: #63665b;
-  font-size: 14px;
-  line-height: 1.85;
+.brand-partners__rows {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.brand-partners__rows:hover .logo-marquee__track,
+.brand-partners__rows:focus-within .logo-marquee__track {
+  animation-play-state: paused;
 }
 .brand-partners .logo-marquee--home {
   padding: 0;
@@ -94,6 +99,8 @@
 }
 .brand-partners .logo-marquee--home .logo-marquee__group {
   flex-wrap: nowrap;
+  justify-content: space-around;
+  min-width: 100vw;
   gap: 48px;
   padding-right: 48px;
 }
@@ -140,18 +147,6 @@
   .brand-partners {
     gap: 22px;
     padding-block: 35px 28px;
-  }
-  .brand-partners__heading {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 19px;
-  }
-  .brand-partners__heading h2 {
-    font-size: 37px;
-  }
-  .brand-partners__description {
-    max-width: 560px;
-    font-size: 13px;
-    line-height: 1.8;
   }
   .brand-partners .logo-marquee--home .logo-marquee__window {
     padding-block: 12px;

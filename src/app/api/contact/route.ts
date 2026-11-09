@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 const MAX_BODY_BYTES = 16_384;
-const CONTACT_EMAIL = "market@lgi.com";
+const CONTACT_EMAIL = "linkingglobal@wotokol.com";
 const productTypes = new Set([
   "Gaming & peripherals",
   "Food & beverage",
@@ -114,7 +114,7 @@ export async function POST(request: Request) {
     return json(
       {
         message:
-          "We couldn’t process this inquiry. Please email market@lgi.com.",
+          "We couldn’t process this inquiry. Please email linkingglobal@wotokol.com.",
       },
       400,
     );
@@ -237,7 +237,7 @@ export async function POST(request: Request) {
     const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
     return json({
       mode: "email",
-      message: "Open your email app to send your inquiry to market@lgi.com.",
+      message: "Open your email app to send your inquiry to linkingglobal@wotokol.com.",
       mailto,
     });
   }
@@ -251,7 +251,7 @@ export async function POST(request: Request) {
     return json(
       {
         message:
-          "Our contact service is unavailable. Please email market@lgi.com.",
+          "Our contact service is unavailable. Please email linkingglobal@wotokol.com.",
       },
       503,
     );
@@ -274,7 +274,7 @@ export async function POST(request: Request) {
       return json(
         {
           message:
-            "We couldn’t deliver your inquiry. Please try again, or email market@lgi.com.",
+            "We couldn’t deliver your inquiry. Please try again, or email linkingglobal@wotokol.com.",
         },
         502,
       );
@@ -287,7 +287,7 @@ export async function POST(request: Request) {
     return json(
       {
         message:
-          "Our contact service is temporarily unavailable. Please try again, or email market@lgi.com.",
+          "Our contact service is temporarily unavailable. Please try again, or email linkingglobal@wotokol.com.",
       },
       503,
     );

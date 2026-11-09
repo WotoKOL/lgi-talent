@@ -170,8 +170,10 @@
 }
 
 .contact-page .form-note {
+  max-width: 100%;
   color: #a3a69b;
   font-size: 12px;
+  overflow-wrap: anywhere;
 }
 
 .contact-page .form-note a {
@@ -182,6 +184,7 @@
   border-left-color: var(--yellow);
   background: #fff2000d;
   color: #e1e4d7;
+  overflow-wrap: anywhere;
 }
 
 .contact-page .form-feedback-error {
@@ -199,8 +202,21 @@
   color: #999d91;
 }
 
+.contact-page .contact-details > div {
+  min-width: 0;
+}
+
 .contact-page .contact-details a {
+  display: block;
+  max-width: 100%;
   color: var(--paper);
+  overflow-wrap: anywhere;
+}
+
+.contact-page .contact-details a svg {
+  display: inline-block;
+  margin-left: 12px;
+  vertical-align: middle;
 }
 
 .contact-page .contact-details p {

@@ -46,7 +46,9 @@ export function Footer() {
           <div className="lgi-footer__contact">
             <p className="lgi-footer__label">Good things start with a hello</p>
             <a className="lgi-footer__email" href={`mailto:${site.email}`}>
-              <span>{site.email}</span>
+              <span>
+                {site.email.split("@")[0]}<wbr />@{site.email.split("@")[1]}
+              </span>
               <span className="lgi-footer__email-arrow" aria-hidden="true">
                 <ArrowUpRight size={22} strokeWidth={1.6} />
               </span>

@@ -25,14 +25,20 @@ export function ActionLink({
 }
 export function SectionLabel({
   number,
+  decoration = true,
   children,
 }: {
   number?: string;
+  decoration?: boolean;
   children: React.ReactNode;
 }) {
   return (
     <div className="section-label">
-      {number ? <span>{number}</span> : <span className="tiny-star">✳</span>}
+      {number ? (
+        <span>{number}</span>
+      ) : decoration ? (
+        <span className="tiny-star">✳</span>
+      ) : null}
       {children}
     </div>
   );
@@ -85,51 +91,43 @@ export function BrandWall({ full = false }: { full?: boolean }) {
       className={`brand-partners${full ? " brand-partners--full" : ""}`}
       aria-labelledby="brand-partners-title"
     >
-      <Reveal className="brand-partners__heading" stagger={100}>
-        <h2 id="brand-partners-title">
-          Trusted by
-          <br />
-          global brands.
-        </h2>
-        <p className="brand-partners__description">
-          From consumer tech and smart home to digital platforms and global
-          e-commerce, LGI works with brands across industries to bring their
-          products, stories, and creators to audiences around the world.
-        </p>
+      <Reveal className="brand-partners__heading">
+        <h2 id="brand-partners-title">Trusted by global brands.</h2>
       </Reveal>
-      <LogoSequence variant="home">
-        {logos.map(([file, name]) => (
-          <div key={file} className="brand-partners__logo">
-            <Image
-              src={`/logos/transparent/${file}.png`}
-              alt={name}
-              width={160}
-              height={80}
-              sizes="160px"
-            />
-          </div>
+      <div className="brand-partners__rows">
+        {[logos.slice(0, 9), logos.slice(9)].map((row, index) => (
+          <LogoSequence
+            key={index}
+            variant="home"
+            direction={index === 0 ? "left" : "right"}
+            label={`Partner brands, row ${index + 1}. Hover or focus to pause scrolling.`}
+          >
+            {row.map(([file, name]) => (
+              <div key={file} className="brand-partners__logo">
+                <Image
+                  src={`/logos/transparent/${file}.png`}
+                  alt={name}
+                  width={160}
+                  height={80}
+                  sizes="(max-width: 700px) 132px, 160px"
+                />
+              </div>
+            ))}
+          </LogoSequence>
         ))}
-      </LogoSequence>
+      </div>
     </section>
   );
 }
 export function Stats() {
   return (
-    <section className="stats section-wrap">
-      <Reveal className="stats-intro" variant="left" stagger={110}>
-        <SectionLabel number="01">THE POWER OF CONNECTION</SectionLabel>
-        <p>
-          We bring brands and creators together.
-          <br />
-          Then help them make something matter.
-        </p>
-      </Reveal>
+    <section className="stats section-wrap" aria-label="LGI in numbers">
       <Reveal className="stats-numbers" variant="scale" stagger={160}>
         <Link href="/brand-services" className="stat-pathway">
+          <span className="stat-caption">Brands worked with</span>
           <strong>
             <Counter value={8245} suffix="+" />
           </strong>
-          <span className="stat-caption">Brands worked with</span>
           <span className="stat-destination">
             For Brands
             <span className="stat-arrow" aria-hidden="true">
@@ -138,10 +136,10 @@ export function Stats() {
           </span>
         </Link>
         <Link href="/creators" className="stat-pathway">
+          <span className="stat-caption">Exclusive creators signed</span>
           <strong>
             <Counter value={200} suffix="+" />
           </strong>
-          <span className="stat-caption">Exclusive creators signed</span>
           <span className="stat-destination">
             For Creators
             <span className="stat-arrow" aria-hidden="true">
@@ -153,7 +151,11 @@ export function Stats() {
     </section>
   );
 }
-export function CallToAction({ creator = false }: { creator?: boolean }) {
+export function CallToAction({
+  creator = false,
+}: {
+  creator?: boolean;
+}) {
   return (
     <section
       className={`cta-section section-wrap${creator ? " cta-section-creator" : ""}`}
@@ -163,15 +165,13 @@ export function CallToAction({ creator = false }: { creator?: boolean }) {
         <h2>
           {creator ? (
             <>
-              YOU CREATE.
-              <br />
-              LET’S <em>CONNECT.</em>
+              <span>You create.</span>{" "}
+              <em>Let’s connect.</em>
             </>
           ) : (
             <>
-              READY TO
-              <br />
-              GO <em>GLOBAL?</em>
+              <span>Ready to go</span>{" "}
+              <em>global?</em>
             </>
           )}
         </h2>

@@ -1,6 +1,28 @@
 # 官网验收修改记录
 
-本轮依据 2026 年 11 月 6 日提供的 `官网修改.docx`、`官网修改.zip` 及[飞书验收文档](https://i3h3m6c4zk.feishu.cn/wiki/PsLKwV4fviEuH1ktfPVcBGUynfc)实施。DOCX 与 ZIP 中的 Markdown 文本一致；附件图片已逐项对应。下表记录本轮完成项与用户明确暂缓项。
+当前以 **2026 年 11 月 9 日发布前最终修改**及用户随后补充的要求为准。以下历史记录中的单排 Logo、品牌副标题、统计区介绍、首页小标题序号和旧 CTA 设计已由本轮替代，不代表当前页面状态。Case Studies 继续按此前要求暂时隐藏。
+
+## 2026 年 11 月 9 日发布前最终修改
+
+本轮权威来源为本机下载目录中的 `官网修改 (1).docx` 第七部分“发布前版本修改”，已逐项核对该部分的文字与 image57–image71 配图。此前飞书读取到的部分内容不再作为独立判断依据。
+
+| 页面或区域 | 本轮改动 |
+| --- | --- |
+| Home 品牌区 | `Trusted by global brands.` 改为居中单行标题，删除原有长段介绍；全部原色品牌 Logo 分为两排，分别向相反方向连续滚动，保留聚焦暂停与减少动态效果支持。 |
+| Home 数字区 | 删除 `THE POWER OF CONNECTION` 及其介绍；两组指标居中展示，`Brands worked with` 和 `Exclusive creators signed` 移至数字上方并放大。数字进入视口后递增至 `8,245+`、`200+`；辅助技术读取完整最终数值，减少动态效果或无 JavaScript 时保留最终数值。原有 Brands、Creators 链接保留。 |
+| Home 横幅与服务区 | 横幅改为 `LOCALIZED MARKETING.` 和 `INFINITE POSSIBILITIES.`。服务区使用米白背景、墨黑选中态与少量柔和黄绿细节，缩小双入口并调整标题、说明和卡片间距；品牌主标题改为 `Go Global with the Right Creators`。品牌与创作者服务内容、切换及轮播功能保留。 |
+| Home 与 Creators 博主卡片 | 提高姓名下方分类、粉丝量的字号、字重及对比度，两个主题分别适配；保留原有信息、简介、头像、卡片等高和轮播行为。 |
+| Home 双入口 | 标题改为单行 `LET’S BUILD WHAT’S NEXT`，移除原有换行及末尾标点；说明改为 `Connecting global brands and creators to turn influence into lasting impact.`，置于标题下方。两张卡片仍分别跳转品牌服务和创作者页面。 |
+| 共享页尾 CTA | 使用更柔和的浅黄色渐变、更舒展的标题排版与胶囊按钮。按用户随后补充的要求，这套设计用于所有共享 `CallToAction`：当前 Home、About Us、Creators，以及未来恢复显示时的共用页面；Creators 保留专属文案和 `/contact?audience=creator` 入口。 |
+| Home 小标题 | 按用户随后补充的要求，移除首页各小标题前的数字序号。其他页面的服务、流程编号不在此次删除范围内。 |
+| Brands 首屏 | 删除 `GO GLOBAL` 后的标点；其余标题内容保留。 |
+| 全站邮箱 | 全站联系邮箱替换为 `linkingglobal@wotokol.com`，同步更新页脚、Contact、Legal、Privacy、表单失败提示、兼容 API 邮件草稿目标及 README。页脚与 Contact 的长邮箱允许自然折行，保留完整可见地址；未修改本机 `.env.local`。 |
+
+完整 DOCX 修改及随后新增的“首页小标题去序号”和“共享 CTA 统一设计”均已通过 Lint、类型检查、生产构建及差异空白检查。生产版本已完成首页小标题核对，以及 Home、About、Creators 在 1440px 和 320px 下的 CTA 布局与入口检查，详情见 [verification.md](verification.md)。本轮改动保存在当前工作区，尚未部署。
+
+## 2026 年 11 月 6 日验收及后续历史记录
+
+以下历史记录依据 2026 年 11 月 6 日提供的 `官网修改.docx`、`官网修改.zip` 及[飞书验收文档](https://i3h3m6c4zk.feishu.cn/wiki/PsLKwV4fviEuH1ktfPVcBGUynfc)实施。DOCX 与 ZIP 中的 Markdown 文本一致；附件图片已逐项对应。下表保留当时的完成项与用户明确暂缓项。
 
 | 页面 | 已完成调整 |
 | --- | --- |

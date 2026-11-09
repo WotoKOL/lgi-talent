@@ -21,7 +21,7 @@ export function LegalPage({
         </section>
       ))}
       <p>
-        Questions? Contact <a href="mailto:market@lgi.com">market@lgi.com</a>.
+        Questions? Contact <a href="mailto:linkingglobal@wotokol.com">linkingglobal@wotokol.com</a>.
       </p>
       <Link href="/contact" className="text-link">
         Get in touch ↗

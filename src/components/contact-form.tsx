@@ -183,7 +183,7 @@ export function ContactForm({ audience = "brand" }: { audience?: Audience }) {
     if (formData.get("website")) {
       setFeedback({
         kind: "error",
-        message: "We couldn’t process this inquiry. Please email market@lgi.com.",
+        message: "We couldn’t process this inquiry. Please email linkingglobal@wotokol.com.",
       });
       return;
     }
@@ -217,7 +217,7 @@ export function ContactForm({ audience = "brand" }: { audience?: Audience }) {
       setFeedback({
         kind: "error",
         message:
-          "We couldn’t send your inquiry. Please try again, or email market@lgi.com.",
+          "We couldn’t send your inquiry. Please try again, or email linkingglobal@wotokol.com.",
       });
     } finally {
       submittingRef.current = false;
@@ -503,7 +503,7 @@ export function ContactForm({ audience = "brand" }: { audience?: Audience }) {
           )}
         </button>
         <p className="form-note">
-          Prefer email? <a href="mailto:market@lgi.com">market@lgi.com</a>
+          Prefer email? <a href="mailto:linkingglobal@wotokol.com">linkingglobal@wotokol.com</a>
         </p>
 
         {feedback && (

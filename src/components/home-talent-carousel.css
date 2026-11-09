@@ -116,14 +116,17 @@
   overflow-wrap: anywhere;
 }
 
-.home-talent-copy p {
-  margin: 9px 0 15px;
-  color: #605d56;
-  font-size: 11px;
-  line-height: 1.5;
+.home-talent-copy > p:not(.home-talent-bio) {
+  margin: 11px 0 18px;
+  color: #3b4032;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-wrap: balance;
 }
 
-.home-talent-copy p span {
+.home-talent-copy > p:not(.home-talent-bio) span {
+  font-weight: 700;
   white-space: nowrap;
 }
 
@@ -181,8 +184,8 @@
   box-shadow: 0 5px 16px #0003;
 }
 
-.home-talent-dark .home-talent-copy > p {
-  color: #c7cabc;
+.home-talent-dark .home-talent-copy > p:not(.home-talent-bio) {
+  color: #eceee5;
 }
 
 .home-talent-dark .home-talent-copy > .home-talent-bio {

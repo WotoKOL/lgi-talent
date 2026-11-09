@@ -82,16 +82,21 @@
   padding-block: 55px 70px;
 }
 
-#connections .stats-intro > p {
-  max-width: 27ch;
-  margin-top: 0;
-  font-size: clamp(20px, 2.2vw, 30px);
-  color: #35382d;
-  line-height: 1.4;
+.home-audience .section-heading {
+  display: block;
+}
+
+.home-audience .section-heading h2 {
+  font-size: clamp(27px, 8vw, 92px);
+  line-height: 1.12;
+  white-space: nowrap;
 }
 
 .home-audience .section-heading > p {
-  max-width: 350px;
+  max-width: 60ch;
+  margin-top: 24px;
+  color: #d6d8ce;
+  font-size: clamp(14px, 1.3vw, 18px);
   line-height: 1.8;
 }
 
@@ -154,6 +159,21 @@
 }
 
 @media (max-width: 700px) {
+  .home-audience .section-heading > p {
+    margin-top: 18px;
+  }
+  .statement-band {
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    white-space: normal;
+    text-align: center;
+  }
+  .statement-band > span:not(.band-star) {
+    flex-basis: 100%;
+  }
+  .statement-band .band-star {
+    font-size: 20px;
+  }
   .home-hero-influencer {
     padding-bottom: 80px;
   }

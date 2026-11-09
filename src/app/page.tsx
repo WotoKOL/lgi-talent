@@ -68,9 +68,9 @@ export default function Home() {
         <Stats />
       </div>
       <Reveal className="statement-band" variant="scale" duration={850}>
-        <span>LOCAL KNOW-HOW.</span>
+        <span>LOCALIZED MARKETING.</span>
         <span className="band-star">✳</span>
-        <span>GLOBAL POSSIBILITIES.</span>
+        <span>INFINITE POSSIBILITIES.</span>
         <span className="band-star">✳</span>
       </Reveal>
       <Capabilities />
@@ -79,16 +79,13 @@ export default function Home() {
         <Reveal variant="left" duration={1000}>
           <div className="section-heading">
             <div>
-              <SectionLabel number="04">BRANDS & CREATORS</SectionLabel>
+              <SectionLabel decoration={false}>BRANDS & CREATORS</SectionLabel>
               <h2 id="home-audience-heading">
-                LET’S BUILD
-                <br />
-                <em>WHAT’S NEXT.</em>
+                LET’S BUILD <em>WHAT’S NEXT</em>
               </h2>
             </div>
             <p>
-              Building a brand or growing your creative career?
-              Find the right way to work with LGI.
+              Connecting global brands and creators to turn influence into lasting impact.
             </p>
           </div>
         </Reveal>

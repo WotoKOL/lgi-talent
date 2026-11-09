@@ -20,8 +20,8 @@ type Audience = "brand" | "creator";
 const audiences: Audience[] = ["brand", "creator"];
 const audienceContent = {
   brand: {
-    title: "Every Brand Partnership —",
-    emphasis: ["Strategic, Creative,", "and Built to Execute."],
+    title: "Go Global with the Right Creators",
+    emphasis: [],
     description:
       "From target markets to final delivery, LGI coordinates creator resources, content collaboration, and on-the-ground execution for brands.",
     services: brandServices,
@@ -30,7 +30,7 @@ const audienceContent = {
   },
   creator: {
     title: "Focus on Creating.",
-    emphasis: ["Leave the Business", "to LGI."],
+    emphasis: ["Leave the Business to LGI."],
     description:
       "From choosing the right brands to completing each collaboration, LGI provides representation tailored to your positioning and partnership needs.",
     services: creatorServices,
@@ -230,7 +230,7 @@ export function Capabilities() {
     >
       <div className="capability-section-top" data-capability-reveal="top">
         <div className="section-label">
-          <span>02</span>OUR CORE CAPABILITIES
+          OUR CORE CAPABILITIES
         </div>
         <span className="capability-section-mark" aria-hidden="true">
           ✳
@@ -324,13 +324,9 @@ export function Capabilities() {
             >
               <h2 data-capability-reveal="title" data-capability-reveal-delay="90">
                 <span>{content.title}</span>{" "}
-                <em>
-                  {content.emphasis.map((line, index) => (
-                    <span key={line}>
-                      {index > 0 ? " " : ""}{line}
-                    </span>
-                  ))}
-                </em>
+                {content.emphasis.length > 0 ? (
+                  <em>{content.emphasis.join(" ")}</em>
+                ) : null}
               </h2>
               <p data-capability-reveal="description" data-capability-reveal-delay="190">
                 {content.description}

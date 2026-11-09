@@ -32,7 +32,7 @@ export default function Privacy() {
         },
         {
           title: "Contact",
-          text: "LGI, 17800 Castleton St, Ste 665, City of Industry, CA 91748, United States. Email: market@lgi.com.",
+          text: "LGI, 17800 Castleton St, Ste 665, City of Industry, CA 91748, United States. Email: linkingglobal@wotokol.com.",
         },
       ]}
     />

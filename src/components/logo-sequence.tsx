@@ -7,9 +7,13 @@ import "./logo-sequence.css";
 export function LogoSequence({
   children,
   variant = "default",
+  direction = "left",
+  label,
 }: {
   children: ReactNode;
   variant?: "default" | "home";
+  direction?: "left" | "right";
+  label?: string;
 }) {
   const [paused, setPaused] = useState(false);
   const trackId = useId();
@@ -21,6 +25,7 @@ export function LogoSequence({
     <div
       className={`logo-marquee${variant === "home" ? " logo-marquee--home" : ""}`}
       data-paused={paused}
+      data-direction={direction}
     >
       <div
         className="logo-marquee__window"
@@ -28,7 +33,7 @@ export function LogoSequence({
         role={variant === "home" ? "group" : undefined}
         aria-label={
           variant === "home"
-            ? "Partner brands. Hover or focus to pause scrolling."
+            ? label ?? "Partner brands. Hover or focus to pause scrolling."
             : undefined
         }
       >
