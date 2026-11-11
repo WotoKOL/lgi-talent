@@ -664,11 +664,11 @@
     "source": "xl/drawings/media/image1.png",
     "sourceWorkbook": "官网博主信息.xlsx",
     "sourceRow": 2,
-    "width": 640,
-    "height": 641,
-    "bytes": 127108,
+    "width": 608,
+    "height": 608,
+    "bytes": 119222,
     "encoding": "WebP, quality 86, effort 6, metadata stripped",
-    "resized": false
+    "resized": true
   },
   "creator-hf-outdoors": {
     "file": "/images/creators/hf-outdoors.webp",
